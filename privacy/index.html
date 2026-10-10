@@ -30,6 +30,7 @@
 <li>Allt du lägger in sparas i appens privata lagring på telefonen. Ingen annan app och ingen annan person kan läsa den.</li>
 <li>Bilder du tar vid inmätning sparas i appen, utan platsuppgifter och andra metadata.</li>
 <li><strong>Steg (Health Connect):</strong> om du slår på steg läser appen antalet steg från Health Connect, Androids hälsodatabas i telefonen (dit t.ex. din klocka eller telefonens stegräknare sparar steg). Appen begär bara behörighet att <em>läsa steg</em> – inga andra hälsodata – och skriver inget till Health Connect. Antalet steg för avslutade dagar sparas i appen för statistiken. Inget skickas ut. Du kan ta tillbaka åtkomsten i Health Connect när som helst.</li>
+<li><strong>Steg (telefonens stegräknare):</strong> väljer du telefonens stegräknare i stället läser appen telefonens inbyggda stegsensor. Bara antalet steg läses; appen vet inte var du går. Antalet steg per dag sparas i appen. Inget skickas ut.</li>
 <li>Blodtryck och puls som du själv matar in sparas i appen som övriga mått.</li>
 <li>Widgetar (om du lägger till dem): visar t.ex. nästa måltid, vatten, steg och pass på telefonens hemskärm, så att den som ser skärmen kan se det. Vikt, mått och bilder visas aldrig i widgetarna.</li>
 <li>Vi (utvecklaren) får aldrig del av din data.</li>
@@ -51,8 +52,9 @@
 <ul>
 <li>Notiser och alarm: för påminnelser om måltider, uppgifter, vatten och träning.</li>
 <li>Internet: för Livsmedelsverkets data och webbläget.</li>
-<li>Förgrundstjänst: håller webbläget igång medan du använder det, med en synlig notis.</li>
+<li>Förgrundstjänst: håller webbläget igång medan du använder det, och räknar steg med telefonens stegräknare när appen är stängd (om du valt det) – båda med en synlig notis.</li>
 <li>Health Connect (läsa steg): bara om du slår på steg. Läsa i bakgrunden: bara om du slår på påminnelsen om steg kvar, så att den kan visa hur många steg som återstår.</li>
+<li>Fysisk aktivitet: bara om du väljer telefonens stegräknare, för att läsa stegsensorn.</li>
 </ul>
 
 <h2>Ta bort din data</h2>
@@ -85,6 +87,7 @@
 <li>Everything you enter is stored in the app's private storage on the phone. No other app and no other person can read it.</li>
 <li>Photos you take at measurements are stored in the app, without location and other metadata.</li>
 <li><strong>Steps (Health Connect):</strong> if you turn on steps, the app reads the number of steps from Health Connect, Android's health database on the phone (where e.g. your watch or the phone's step counter stores steps). The app only asks for permission to <em>read steps</em> – no other health data – and writes nothing to Health Connect. The number of steps for finished days is saved in the app for the statistics. Nothing is sent out. You can take back the access in Health Connect at any time.</li>
+<li><strong>Steps (the phone's step counter):</strong> if you choose the phone's step counter instead, the app reads the phone's built-in step sensor. Only the number of steps is read; the app does not know where you walk. The number of steps per day is saved in the app. Nothing is sent out.</li>
 <li>Blood pressure and pulse that you enter yourself are stored in the app like other measurements.</li>
 <li>Widgets (if you add them): show e.g. the next meal, water, steps and workouts on the phone's home screen, so anyone who sees the screen can see it. Weight, measurements and photos are never shown in the widgets.</li>
 <li>We (the developer) never receive your data.</li>
@@ -106,8 +109,9 @@
 <ul>
 <li>Notifications and alarms: for reminders about meals, tasks, water and training.</li>
 <li>Internet: for the Swedish Food Agency's data and web mode.</li>
-<li>Foreground service: keeps web mode running while you use it, with a visible notification.</li>
+<li>Foreground service: keeps web mode running while you use it, and counts steps with the phone's step counter when the app is closed (if you chose that) – both with a visible notification.</li>
 <li>Health Connect (read steps): only if you turn on steps. Read in the background: only if you turn on the reminder about steps left, so that it can show how many steps remain.</li>
+<li>Physical activity: only if you choose the phone's step counter, to read the step sensor.</li>
 </ul>
 
 <h2>Deleting your data</h2>
