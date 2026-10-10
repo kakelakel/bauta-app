@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Steadfast – kost och träning, en dag i taget</title>
+<meta name="description" content="Steadfast hjälper dig att följa din egen plan för kost och träning. All data stannar på din telefon – inget konto, ingen reklam, ingen spårning.">
+<link rel="icon" href="bilder/ikon.png">
+<style>
+  /* Inga externa resurser: inga typsnitt, skript eller mätverktyg från andra webbplatser. */
+  :root { --bg:#F4F6F1; --surface:#FFFFFF; --fg:#17201A; --muted:#55615A; --accent:#2F6B3F; --accent-fg:#FFFFFF; --soft:#E2EEE3; --line:#DCE2D9; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#0F1411; --surface:#18201B; --fg:#E4EAE3; --muted:#9DAAA1; --accent:#9CD5A4; --accent-fg:#0F1411; --soft:#1E3324; --line:#2A352E; } }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font:17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .wrap { max-width:960px; margin:0 auto; padding:0 16px; }
+  header { padding:40px 0 24px; }
+  .brand { display:flex; align-items:center; gap:16px; }
+  .brand img { width:72px; height:72px; border-radius:18px; }
+  h1 { font-size:clamp(32px,6vw,48px); line-height:1.1; margin:0; letter-spacing:-.5px; }
+  .tagline { font-size:20px; color:var(--muted); margin:8px 0 0; }
+  nav.lang { float:right; font-size:15px; } nav.lang a { color:var(--accent); }
+  .lead { font-size:19px; max-width:62ch; margin:24px 0; }
+  .facts { display:flex; flex-wrap:wrap; gap:8px; padding:0; margin:0 0 32px; list-style:none; }
+  .facts li { background:var(--soft); color:var(--fg); border-radius:999px; padding:6px 14px; font-size:15px; font-weight:600; }
+  .shots { display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:12px; margin:8px 0 40px; }
+  .shots img { width:100%; height:auto; border-radius:14px; border:1px solid var(--line); }
+  @media (max-width:700px) { .shots { grid-template-columns:repeat(2, minmax(0,1fr)); } }
+  h2 { font-size:26px; margin:40px 0 12px; }
+  .features { display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:16px; }
+  @media (max-width:760px) { .features { grid-template-columns:minmax(0,1fr); } }
+  .card { background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:18px 20px; }
+  .card h3 { margin:0 0 6px; font-size:18px; color:var(--accent); }
+  .card p { margin:0; color:var(--muted); font-size:16px; }
+  .download { background:var(--surface); border:2px solid var(--accent); border-radius:20px; padding:24px; margin:40px 0; }
+  .button { display:inline-block; background:var(--accent); color:var(--accent-fg); text-decoration:none; font-weight:700; padding:12px 22px; border-radius:999px; }
+  .button.disabled { opacity:.55; pointer-events:none; }
+  ol li { margin-bottom:6px; }
+  .note { color:var(--muted); font-size:15px; }
+  footer { border-top:1px solid var(--line); margin-top:48px; padding:24px 0 48px; color:var(--muted); font-size:15px; }
+  footer a, .download a:not(.button), p a { color:var(--accent); }
+  section[lang="en"] { border-top:1px solid var(--line); margin-top:56px; padding-top:8px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav class="lang"><a href="#en">English</a></nav>
+
+<header>
+  <div class="brand">
+    <img src="bilder/ikon.png" alt="">
+    <div>
+      <h1>Steadfast</h1>
+      <p class="tagline">Kost och träning, en dag i taget</p>
+    </div>
+  </div>
+</header>
+
+<main>
+<section lang="sv">
+  <p class="lead">Steadfast hjälper dig att hålla fast vid en plan du själv har valt – för måltider, rutiner och träning. Inte en diet, och ingen app som säger vad du ska äta. Bara ett lugnt stöd för att göra det du bestämt.</p>
+  <ul class="facts">
+    <li>All data stannar på din telefon</li><li>Inget konto</li><li>Ingen reklam</li><li>Ingen spårning</li><li>Gratis</li>
+  </ul>
+
+  <div class="shots">
+    <img src="bilder/hem.jpg" alt="Hem: dagens kost, vatten och nästa pass" loading="lazy">
+    <img src="bilder/idag.jpg" alt="Idag: dagens måltider att bocka av" loading="lazy">
+    <img src="bilder/framsteg.jpg" alt="Framsteg: serier och utmärkelser" loading="lazy">
+    <img src="bilder/teman.jpg" alt="Tolv teman att välja mellan" loading="lazy">
+  </div>
+
+  <h2>Vad appen gör</h2>
+  <div class="features">
+    <div class="card"><h3>Kost</h3><p>Planera veckan med måltider och tider, bocka av eller flytta 30 minuter, och se hur planen ligger mot dina dagsmål. Näringsvärden från Livsmedelsverket.</p></div>
+    <div class="card"><h3>Träning</h3><p>Pass och program, över 120 övningar, set för set med vilotimer. Nästa pass utgår från det du gjorde senast.</p></div>
+    <div class="card"><h3>Framsteg utan press</h3><p>Serier enligt "missa aldrig två gånger i rad", och utmärkelser för det du själv styr – aldrig för snabb viktnedgång.</p></div>
+  </div>
+
+  <div class="download" id="ladda-ner">
+    <h2 style="margin-top:0">Ladda ner</h2>
+    <p><a class="button disabled" href="#ladda-ner" aria-disabled="true">Nedladdningen kommer snart</a></p>
+    <p class="note">Steadfast finns för Android 8 och senare. Appen laddas ner som en fil direkt härifrån, inte från Google Play.</p>
+    <h3>Så installerar du</h3>
+    <ol>
+      <li>Öppna den här sidan på din Android-telefon och tryck <strong>Ladda ner</strong>.</li>
+      <li>Öppna filen när den har laddats ner.</li>
+      <li>Telefonen frågar om webbläsaren får installera appar. Tryck <strong>Inställningar</strong>, slå på <strong>Tillåt från den här källan</strong> och gå tillbaka.</li>
+      <li>Tryck <strong>Installera</strong>. Telefonen kan varna för en okänd app – det är för att den inte kommer från Google Play.</li>
+      <li>Ny version: ladda ner och installera på samma sätt. Din data ligger kvar.</li>
+    </ol>
+  </div>
+
+  <h2>Din integritet</h2>
+  <p>Allt du skriver in i Steadfast sparas bara på din telefon. Appen har ingen server och skickar aldrig din data någonstans. Läs mer i <a href="privacy/">integritetspolicyn</a>.</p>
+  <p class="note">Steadfast ger inga medicinska råd och ersätter inte vård. Appen är gjord för vuxna, 18 år och äldre.</p>
+</section>
+
+<section lang="en" id="en">
+  <h2>Steadfast in English</h2>
+  <p class="lead">Steadfast helps you stick to a plan you have chosen yourself – for meals, routines and training. Not a diet, and not an app that tells you what to eat. Just calm support for doing what you decided. The app is available in Swedish and English.</p>
+  <ul class="facts">
+    <li>All data stays on your phone</li><li>No account</li><li>No ads</li><li>No tracking</li><li>Free</li>
+  </ul>
+  <div class="shots">
+    <img src="bilder/home.jpg" alt="Home: today's nutrition, water and next workout" loading="lazy">
+    <img src="bilder/today.jpg" alt="Today: the day's meals to check off" loading="lazy">
+    <img src="bilder/progress.jpg" alt="Progress: streaks and awards" loading="lazy">
+    <img src="bilder/themes.jpg" alt="Twelve themes to choose from" loading="lazy">
+  </div>
+  <div class="download">
+    <h2 style="margin-top:0">Download</h2>
+    <p><a class="button disabled" href="#en" aria-disabled="true">Download coming soon</a></p>
+    <p class="note">For Android 8 and later. The app is downloaded as a file directly from here, not from Google Play. When you open it, allow your browser to install apps, then tap Install. Your phone may warn about an unknown app because it doesn't come from Google Play. Updates are installed the same way, and your data is kept.</p>
+  </div>
+  <p>Everything you enter stays on your phone; the app has no server and never sends your data anywhere. Read the <a href="privacy/#en">privacy policy</a>. Steadfast gives no medical advice and does not replace healthcare. Made for adults aged 18 and over.</p>
+</section>
+</main>
+
+<footer>
+  <p>Kontakt / contact: <a href="mailto:steadfasttheapp@gmail.com">steadfasttheapp@gmail.com</a> · <a href="privacy/">Integritetspolicy / Privacy policy</a></p>
+  <p>Sidan använder inga kakor och ingen spårning. / This page uses no cookies and no tracking.</p>
+</footer>
+</div>
+</body>
+</html>
