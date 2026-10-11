@@ -55,4 +55,6 @@ Steadfast helps you stick to a plan you chose yourself – for meals, routines a
 Steadfast är gratis att använda men inte öppen källkod. Den ger inga medicinska råd och är gjord för vuxna, 18 år och äldre.
 Steadfast is free to use but not open source. It gives no medical advice and is made for adults aged 18 and over.
 
+© 2026 skaparen av Steadfast. Gratis för privat bruk – se [villkoren](LICENSE). / Free for personal use – see the [terms](LICENSE).
+
 Kontakt / contact: [steadfasttheapp@gmail.com](mailto:steadfasttheapp@gmail.com)
