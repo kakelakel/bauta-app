@@ -3,9 +3,24 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Steadfast – kost och träning, en dag i taget</title>
-<meta name="description" content="Steadfast hjälper dig att följa din egen plan för kost och träning. All data stannar på din telefon – inget konto, ingen reklam, ingen spårning.">
+<title>Steadfast – gratis app för kost och träning, utan konto | Android</title>
+<meta name="description" content="Gratis Android-app för att planera måltider och logga träning. Följ din egen plan, en dag i taget. All data stannar på din telefon – inget konto, ingen reklam, ingen spårning.">
+<link rel="canonical" href="https://kakelakel.github.io/steadfast-app/">
 <link rel="icon" href="bilder/ikon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Steadfast">
+<meta property="og:title" content="Steadfast – kost och träning, en dag i taget">
+<meta property="og:description" content="Gratis Android-app för din egen plan för mat och träning. Inget konto, ingen reklam, ingen spårning – allt stannar i telefonen.">
+<meta property="og:url" content="https://kakelakel.github.io/steadfast-app/">
+<meta property="og:image" content="https://kakelakel.github.io/steadfast-app/bilder/omslag.png">
+<meta property="og:image:width" content="1024">
+<meta property="og:image:height" content="500">
+<meta property="og:locale" content="sv_SE">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"MobileApplication","name":"Steadfast","operatingSystem":"Android 8.0+","applicationCategory":"HealthApplication","inLanguage":["sv","en"],"offers":{"@type":"Offer","price":"0","priceCurrency":"SEK"},"url":"https://kakelakel.github.io/steadfast-app/","downloadUrl":"https://github.com/kakelakel/steadfast-app/releases/latest","image":"https://kakelakel.github.io/steadfast-app/bilder/ikon.png","description":"Följ din egen plan för kost och träning, en dag i taget. Inget konto, ingen reklam, ingen spårning."}
+</script>
 <style>
   /* Inga externa resurser: inga typsnitt, skript eller mätverktyg från andra webbplatser. */
   :root { --bg:#F4F6F1; --surface:#FFFFFF; --fg:#17201A; --muted:#55615A; --accent:#2F6B3F; --accent-fg:#FFFFFF; --soft:#E2EEE3; --line:#DCE2D9; }
@@ -39,6 +54,16 @@
   footer { border-top:1px solid var(--line); margin-top:48px; padding:24px 0 48px; color:var(--muted); font-size:15px; }
   footer a, .download a:not(.button), p a { color:var(--accent); }
   section[lang="en"] { border-top:1px solid var(--line); margin-top:56px; padding-top:8px; }
+  .trust { background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:18px 20px; margin:24px 0; }
+  .trust h3 { margin:0 0 8px; font-size:18px; }
+  .trust ul { margin:8px 0; padding-left:20px; }
+  .fp { display:block; font:13px/1.5 ui-monospace, "Cascadia Mono", Consolas, monospace; background:var(--soft); border-radius:8px; padding:8px 10px; overflow-wrap:anywhere; margin:6px 0 10px; }
+  code { overflow-wrap:anywhere; }
+  details { margin:10px 0; }
+  summary { cursor:pointer; font-weight:600; color:var(--accent); }
+  details table { border-collapse:collapse; width:100%; font-size:15px; margin-top:8px; }
+  details td { border-top:1px solid var(--line); padding:6px 8px 6px 0; vertical-align:top; }
+  details td:first-child { font-weight:600; width:38%; }
 </style>
 </head>
 <body>
@@ -91,6 +116,29 @@
       <li>Tryck <strong>Installera</strong>. Telefonen kan varna för en okänd app – det är för att den inte kommer från Google Play.</li>
       <li>Ny version: ladda ner och installera på samma sätt. Din data ligger kvar.</li>
     </ol>
+    <h3>Få nya versioner automatiskt</h3>
+    <p>Steadfast finns inte i någon appbutik, så telefonen säger inte till när det kommer en ny version. Med gratisappen <a href="https://github.com/ImranR98/Obtainium">Obtainium</a> får du en notis och kan uppdatera med ett tryck: öppna Obtainium, tryck <strong>Lägg till app</strong>, klistra in <code>https://github.com/kakelakel/steadfast-app</code> och tryck <strong>Lägg till</strong>.</p>
+  </div>
+  <div class="trust" id="sakerhet">
+    <h3>Är filen säker?</h3>
+    <p>Det är klokt att vara försiktig med appar utanför Google Play. Så här kan du kontrollera Steadfast:</p>
+    <ul>
+      <li><strong>Ladda bara ner härifrån</strong> eller från <a href="https://github.com/kakelakel/steadfast-app/releases">Releases på GitHub</a>. Steadfast finns inte på andra webbplatser.</li>
+      <li><strong>Kontrollsumma:</strong> varje version har sin SHA-256-summa i versionens text under Releases.</li>
+      <li><strong>Signatur:</strong> alla versioner är signerade med samma nyckel. Android vägrar installera en uppdatering med en annan signatur, så en förfalskad fil kan inte ersätta din app. Nyckelns fingeravtryck (SHA-256):
+        <code class="fp">10:46:A0:6B:B2:C1:25:EF:F9:24:18:29:5E:C4:73:23:24:24:25:C0:E1:B9:94:86:23:08:D0:B0:FE:85:DF:66</code></li>
+    </ul>
+    <details>
+      <summary>Vilka behörigheter appen ber om, och varför</summary>
+      <table>
+        <tr><td>Internet</td><td>Bara för att hämta näringsvärden från Livsmedelsverkets öppna databas, och för webbläget i ditt eget wifi. Ingen data om dig skickas ut.</td></tr>
+        <tr><td>Notiser, vibration, exakta alarm, hålla vaken</td><td>Påminnelser på klockslag du själv väljer, även när skärmen är släckt.</td></tr>
+        <tr><td>Starta efter omstart</td><td>Lägga in dina påminnelser igen när telefonen startats om.</td></tr>
+        <tr><td>Fysisk aktivitet, Health Connect (steg)</td><td>Visa dina steg från telefonens stegräknare eller klockan. Bara steg läses, inget annat.</td></tr>
+        <tr><td>Förgrundstjänst</td><td>Räkna steg när appen är stängd, och hålla igång webbläget medan du använder det.</td></tr>
+        <tr><td>Nätverksstatus</td><td>Se om telefonen är på wifi, för webbläget.</td></tr>
+      </table>
+    </details>
   </div>
 
   <h2>Din integritet</h2>
@@ -115,6 +163,28 @@
     <h2 style="margin-top:0">Download</h2>
     <p><a class="button" href="https://github.com/kakelakel/steadfast-app/releases/latest/download/steadfast.apk">Download Steadfast</a></p>
     <p class="note">Version 1.0 (21) · for Android 8 and later · 5.3 MB. The app is downloaded as a file directly from here, not from Google Play. When you open it, allow your browser to install apps, then tap Install. Your phone may warn about an unknown app because it doesn't come from Google Play. Updates are installed the same way, and your data is kept.</p>
+    <h3>Get updates automatically</h3>
+    <p>Steadfast isn't in an app store, so your phone won't tell you about new versions. With the free app <a href="https://github.com/ImranR98/Obtainium">Obtainium</a> you get a notification and can update with one tap: open Obtainium, tap <strong>Add App</strong>, paste <code>https://github.com/kakelakel/steadfast-app</code> and tap <strong>Add</strong>.</p>
+  </div>
+  <div class="trust" id="security">
+    <h3>Is the file safe?</h3>
+    <ul>
+      <li><strong>Only download from here</strong> or from <a href="https://github.com/kakelakel/steadfast-app/releases">Releases on GitHub</a>. Steadfast is not published anywhere else.</li>
+      <li><strong>Checksum:</strong> each version lists its SHA-256 in its release notes.</li>
+      <li><strong>Signature:</strong> every version is signed with the same key, and Android refuses an update with a different signature, so a tampered file can't replace your app. Signing certificate fingerprint (SHA-256):
+        <code class="fp">10:46:A0:6B:B2:C1:25:EF:F9:24:18:29:5E:C4:73:23:24:24:25:C0:E1:B9:94:86:23:08:D0:B0:FE:85:DF:66</code></li>
+    </ul>
+    <details>
+      <summary>Which permissions the app asks for, and why</summary>
+      <table>
+        <tr><td>Internet</td><td>Only to fetch nutrition values from the Swedish Food Agency's open database, and for web mode on your own Wi-Fi. No data about you is sent out.</td></tr>
+        <tr><td>Notifications, vibration, exact alarms, wake lock</td><td>Reminders at times you choose, even with the screen off.</td></tr>
+        <tr><td>Run at startup</td><td>Restore your reminders after the phone restarts.</td></tr>
+        <tr><td>Physical activity, Health Connect (steps)</td><td>Show steps from the phone's step counter or your watch. Only steps are read.</td></tr>
+        <tr><td>Foreground service</td><td>Count steps while the app is closed, and keep web mode running while you use it.</td></tr>
+        <tr><td>Network state</td><td>Check whether the phone is on Wi-Fi, for web mode.</td></tr>
+      </table>
+    </details>
   </div>
   <p>Everything you enter stays on your phone; the app has no server and never sends your data anywhere. Read the <a href="privacy/#en">privacy policy</a>. Steadfast gives no medical advice and does not replace healthcare. Made for adults aged 18 and over.</p>
 </section>
