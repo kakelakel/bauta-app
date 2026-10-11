@@ -7,6 +7,7 @@
 <meta name="description" content="Gratis Android-app för att planera måltider och logga träning. Följ din egen plan, en dag i taget. All data stannar på din telefon – inget konto, ingen reklam, ingen spårning.">
 <link rel="canonical" href="https://kakelakel.github.io/steadfast-app/">
 <link rel="icon" href="bilder/ikon.png">
+<meta name="theme-color" content="#2E6B3E">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Steadfast">
 <meta property="og:title" content="Steadfast – kost och träning, en dag i taget">
@@ -21,179 +22,336 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"MobileApplication","name":"Steadfast","operatingSystem":"Android 8.0+","applicationCategory":"HealthApplication","inLanguage":["sv","en"],"offers":{"@type":"Offer","price":"0","priceCurrency":"SEK"},"url":"https://kakelakel.github.io/steadfast-app/","downloadUrl":"https://github.com/kakelakel/steadfast-app/releases/latest","image":"https://kakelakel.github.io/steadfast-app/bilder/ikon.png","description":"Följ din egen plan för kost och träning, en dag i taget. Inget konto, ingen reklam, ingen spårning."}
 </script>
+<link rel="preload" href="fonts/atkinson-hyperlegible-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
 <style>
-  /* Inga externa resurser: inga typsnitt, skript eller mätverktyg från andra webbplatser. */
-  :root { --bg:#F4F6F1; --surface:#FFFFFF; --fg:#17201A; --muted:#55615A; --accent:#2F6B3F; --accent-fg:#FFFFFF; --soft:#E2EEE3; --line:#DCE2D9; }
-  @media (prefers-color-scheme: dark) { :root { --bg:#0F1411; --surface:#18201B; --fg:#E4EAE3; --muted:#9DAAA1; --accent:#9CD5A4; --accent-fg:#0F1411; --soft:#1E3324; --line:#2A352E; } }
+  /* Typsnittet ligger på sidan själv (Atkinson Hyperlegible, SIL OFL, fonts/OFL.txt).
+     Siffrorna tas från systemets typsnitt, eftersom Atkinsons nolla är överstruken och liknar Ø.
+     Inga kakor och inga mätverktyg. Det enda anropet utåt är till GitHubs API för versionsinfo. */
+  @font-face { font-family:"Atkinson"; src:url("fonts/atkinson-hyperlegible-latin-400-normal.woff2") format("woff2"); font-weight:400; font-display:swap; unicode-range:U+0000-002F, U+003A-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212; }
+  @font-face { font-family:"Atkinson"; src:url("fonts/atkinson-hyperlegible-latin-700-normal.woff2") format("woff2"); font-weight:700; font-display:swap; unicode-range:U+0000-002F, U+003A-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212; }
+
+  :root {
+    --bg:#EEF3EC; --surface:#FFFFFF; --ink:#16231A; --muted:#506157;
+    --accent:#2E6B3E; --accent-ink:#FFFFFF; --ring:#CFE3D2; --line:#D6E0D4; --flame:#B5432A;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#0F1612; --surface:#17211B; --ink:#E3EBE4; --muted:#9BAAA0; --accent:#8FD19C; --accent-ink:#0F1612; --ring:#24402C; --line:#28372D; --flame:#F08A6C; }
+  }
   * { box-sizing:border-box; }
-  body { margin:0; background:var(--bg); color:var(--fg); font:17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
-  .wrap { max-width:960px; margin:0 auto; padding:0 16px; }
-  header { padding:40px 0 24px; }
-  .brand { display:flex; align-items:center; gap:16px; }
-  .brand img { width:72px; height:72px; border-radius:18px; }
-  h1 { font-size:clamp(32px,6vw,48px); line-height:1.1; margin:0; letter-spacing:-.5px; }
-  .tagline { font-size:20px; color:var(--muted); margin:8px 0 0; }
-  nav.lang { float:right; font-size:15px; } nav.lang a { color:var(--accent); }
-  .lead { font-size:19px; max-width:62ch; margin:24px 0; }
-  .facts { display:flex; flex-wrap:wrap; gap:8px; padding:0; margin:0 0 32px; list-style:none; }
-  .facts li { background:var(--soft); color:var(--fg); border-radius:999px; padding:6px 14px; font-size:15px; font-weight:600; }
-  .shots { display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:12px; margin:8px 0 40px; }
-  .shots img { width:100%; height:auto; border-radius:14px; border:1px solid var(--line); }
-  @media (max-width:700px) { .shots { grid-template-columns:repeat(2, minmax(0,1fr)); } }
-  h2 { font-size:26px; margin:40px 0 12px; }
-  .features { display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:16px; }
-  @media (max-width:760px) { .features { grid-template-columns:minmax(0,1fr); } }
-  .card { background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:18px 20px; }
-  .card h3 { margin:0 0 6px; font-size:18px; color:var(--accent); }
-  .card p { margin:0; color:var(--muted); font-size:16px; }
-  .download { background:var(--surface); border:2px solid var(--accent); border-radius:20px; padding:24px; margin:40px 0; }
-  .button { display:inline-block; background:var(--accent); color:var(--accent-fg); text-decoration:none; font-weight:700; padding:12px 22px; border-radius:999px; }
-  .button.disabled { opacity:.55; pointer-events:none; }
-  ol li { margin-bottom:6px; }
-  .note { color:var(--muted); font-size:15px; }
-  footer { border-top:1px solid var(--line); margin-top:48px; padding:24px 0 48px; color:var(--muted); font-size:15px; }
-  footer a, .download a:not(.button), p a { color:var(--accent); }
-  section[lang="en"] { border-top:1px solid var(--line); margin-top:56px; padding-top:8px; }
-  .trust { background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:18px 20px; margin:24px 0; }
-  .trust h3 { margin:0 0 8px; font-size:18px; }
-  .trust ul { margin:8px 0; padding-left:20px; }
-  .fp { display:block; font:13px/1.5 ui-monospace, "Cascadia Mono", Consolas, monospace; background:var(--soft); border-radius:8px; padding:8px 10px; overflow-wrap:anywhere; margin:6px 0 10px; }
-  code { overflow-wrap:anywhere; }
-  details { margin:10px 0; }
-  summary { cursor:pointer; font-weight:600; color:var(--accent); }
-  details table { border-collapse:collapse; width:100%; font-size:15px; margin-top:8px; }
-  details td { border-top:1px solid var(--line); padding:6px 8px 6px 0; vertical-align:top; }
-  details td:first-child { font-weight:600; width:38%; }
+  html { -webkit-text-size-adjust:100%; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:18px/1.6 "Atkinson", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  a { color:var(--accent); text-underline-offset:3px; }
+  a:focus-visible, summary:focus-visible { outline:3px solid var(--accent); outline-offset:3px; border-radius:6px; }
+  img { max-width:100%; display:block; }
+  code { font:15px/1.5 ui-monospace, "Cascadia Mono", Consolas, monospace; overflow-wrap:anywhere; }
+  .wrap { max-width:1080px; margin:0 auto; padding:0 20px; }
+  .measure { max-width:62ch; }
+
+  /* Topp */
+  .top { display:flex; justify-content:space-between; align-items:center; padding:20px 0; }
+  .brand { display:flex; align-items:center; gap:12px; font-weight:700; font-size:20px; color:var(--ink); text-decoration:none; }
+  .brand img { width:40px; height:40px; border-radius:11px; }
+  .top nav { font-size:16px; }
+
+  /* Hero */
+  .hero { display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr); gap:56px; align-items:center; padding:32px 0 72px; }
+  .hero h1 { font-size:clamp(44px,7.2vw,84px); line-height:1.02; letter-spacing:-.025em; margin:0 0 20px; font-weight:700; }
+  .hero .lead { font-size:21px; color:var(--muted); margin:0 0 32px; max-width:34ch; }
+  .cta { display:flex; flex-wrap:wrap; align-items:center; gap:14px 20px; }
+  .button { display:inline-flex; align-items:center; gap:10px; background:var(--accent); color:var(--accent-ink); text-decoration:none; font-weight:700; font-size:19px; padding:15px 26px; border-radius:999px; }
+  .button:hover { filter:brightness(1.08); }
+  .button svg { width:20px; height:20px; }
+  .meta { font-size:15px; color:var(--muted); margin:14px 0 0; }
+  .meta strong { color:var(--ink); }
+
+  /* Veckoremsan: appens regel "missa aldrig två gånger i rad", visad i stället för förklarad */
+  .week { margin:44px 0 0; }
+  .days { display:grid; grid-template-columns:repeat(7, 44px); gap:10px; list-style:none; margin:0; padding:0; }
+  .days li { display:grid; justify-items:center; gap:6px; font-size:14px; color:var(--muted); }
+  .dot { width:44px; height:44px; border-radius:50%; display:grid; place-items:center; background:var(--accent); color:var(--accent-ink); }
+  .dot svg { width:22px; height:22px; }
+  .dot.miss { background:transparent; box-shadow:inset 0 0 0 3px var(--ring); color:transparent; }
+  .week p { margin:14px 0 0; font-size:16px; color:var(--muted); max-width:40ch; }
+  .week p b { color:var(--flame); }
+
+  .phone { justify-self:center; width:min(320px,100%); padding:12px; border-radius:42px; background:var(--ink); box-shadow:0 30px 60px -30px rgba(22,35,26,.5); }
+  .phone img { border-radius:31px; width:100%; height:auto; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .days .dot:not(.miss) { animation:check .45s cubic-bezier(.2,.8,.3,1.3) both; }
+    .days li:nth-child(1) .dot { animation-delay:.15s } .days li:nth-child(2) .dot { animation-delay:.3s }
+    .days li:nth-child(3) .dot { animation-delay:.45s } .days li:nth-child(5) .dot { animation-delay:.9s }
+    .days li:nth-child(6) .dot { animation-delay:1.05s } .days li:nth-child(7) .dot { animation-delay:1.2s }
+    @keyframes check { from { transform:scale(.4); opacity:0 } to { transform:none; opacity:1 } }
+  }
+
+  /* Löften */
+  .promises { display:flex; flex-wrap:wrap; gap:10px 28px; list-style:none; padding:22px 0; margin:0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); font-weight:700; }
+  .promises li { display:flex; align-items:center; gap:8px; }
+  .promises svg { width:18px; height:18px; color:var(--accent); flex:none; }
+
+  h2 { font-size:clamp(30px,4vw,42px); line-height:1.12; letter-spacing:-.015em; margin:88px 0 24px; }
+  h3 { font-size:21px; line-height:1.3; margin:0 0 6px; }
+
+  /* Funktioner som en avbockad lista, som i appen */
+  .checks { list-style:none; padding:0; margin:0; display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:30px 56px; }
+  .checks li { display:grid; grid-template-columns:32px minmax(0,1fr); gap:14px; }
+  .checks li > svg { width:32px; height:32px; color:var(--accent); }
+  .checks p { margin:0; color:var(--muted); }
+
+  /* Skärmbilder */
+  .shots { display:flex; gap:18px; overflow-x:auto; scroll-snap-type:x mandatory; padding:4px 0 18px; margin:0; list-style:none; }
+  .shots li { flex:0 0 min(240px,64vw); scroll-snap-align:start; margin:0; }
+  .shots img { border-radius:22px; border:1px solid var(--line); width:100%; height:auto; }
+  .shots figcaption { font-size:15px; color:var(--muted); margin-top:8px; }
+
+  /* Nedladdning */
+  .get { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:24px; margin-top:8px; }
+  .panel { background:var(--surface); border:1px solid var(--line); border-radius:24px; padding:28px; }
+  .panel.primary { border:2px solid var(--accent); }
+  .steps { margin:16px 0 0; padding-left:22px; }
+  .steps li { margin-bottom:8px; padding-left:4px; }
+  .fp { display:block; font-size:13px; background:var(--bg); border-radius:10px; padding:10px 12px; margin:8px 0 4px; }
+  .panel ul { padding-left:20px; margin:10px 0; }
+  .panel ul li { margin-bottom:8px; }
+  details { margin-top:14px; border-top:1px solid var(--line); padding-top:12px; }
+  summary { cursor:pointer; font-weight:700; color:var(--accent); }
+  details table { border-collapse:collapse; width:100%; font-size:16px; margin-top:10px; }
+  details td { border-top:1px solid var(--line); padding:8px 10px 8px 0; vertical-align:top; }
+  details td:first-child { font-weight:700; width:40%; }
+  .muted { color:var(--muted); font-size:16px; }
+
+  /* Engelska */
+  section[lang="en"] { margin-top:96px; padding-top:8px; border-top:1px solid var(--line); }
+  section[lang="en"] h2 { margin-top:56px; }
+
+  footer { margin-top:96px; padding:28px 0 56px; border-top:1px solid var(--line); color:var(--muted); font-size:16px; }
+  footer p { margin:4px 0; }
+
+  @media (max-width:860px) {
+    .hero { grid-template-columns:minmax(0,1fr); gap:44px; padding-top:12px; }
+    .phone { width:min(280px,80%); }
+    .checks, .get { grid-template-columns:minmax(0,1fr); }
+  }
+  @media (max-width:420px) {
+    .days { grid-template-columns:repeat(7, minmax(0,1fr)); gap:6px; }
+    .dot { width:100%; height:auto; aspect-ratio:1; }
+    body { font-size:17px; }
+    .panel { padding:22px 18px; }
+  }
 </style>
 </head>
 <body>
-<div class="wrap">
-<nav class="lang"><a href="#en">English</a></nav>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="tick" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ringtick" viewBox="0 0 32 32"><circle cx="16" cy="16" r="13.5" fill="none" stroke="currentColor" stroke-width="3"/><path d="M10 16.5l4 4 8-9" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="down" viewBox="0 0 24 24"><path d="M12 4v11m0 0l-5-5m5 5l5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
 
-<header>
-  <div class="brand">
-    <img src="bilder/ikon.png" alt="">
-    <div>
-      <h1>Steadfast</h1>
-      <p class="tagline">Kost och träning, en dag i taget</p>
-    </div>
-  </div>
+<div class="wrap">
+<header class="top">
+  <a class="brand" href="./"><img src="bilder/ikon.png" alt="">Steadfast</a>
+  <nav><a href="#en" hreflang="en">English</a></nav>
 </header>
 
 <main>
 <section lang="sv">
-  <p class="lead">Steadfast hjälper dig att hålla fast vid en plan du själv har valt – för måltider, rutiner och träning. Inte en diet, och ingen app som säger vad du ska äta. Bara ett lugnt stöd för att göra det du bestämt.</p>
-  <ul class="facts">
-    <li>All data stannar på din telefon</li><li>Inget konto</li><li>Ingen reklam</li><li>Ingen spårning</li><li>Gratis</li>
+  <div class="hero">
+    <div>
+      <h1>Din plan.<br>En dag i taget.</h1>
+      <p class="lead">Steadfast hjälper dig att hålla fast vid måltider, rutiner och träning du själv har valt. Ingen diet, och ingen som säger vad du ska äta.</p>
+      <div class="cta">
+        <a class="button" href="https://github.com/kakelakel/steadfast-app/releases/latest/download/steadfast.apk"><svg aria-hidden="true"><use href="#down"/></svg>Ladda ner för Android</a>
+        <a href="#ladda-ner">Så installerar du</a>
+      </div>
+      <p class="meta" data-release="sv">Version 1.0 (22) · för Android 8 och senare · 5,3 MB. Gratis.</p>
+
+      <div class="week" aria-label="Exempel på en vecka i appen">
+        <ol class="days">
+          <li><span class="dot"><svg aria-hidden="true"><use href="#tick"/></svg></span>mån</li>
+          <li><span class="dot"><svg aria-hidden="true"><use href="#tick"/></svg></span>tis</li>
+          <li><span class="dot"><svg aria-hidden="true"><use href="#tick"/></svg></span>ons</li>
+          <li><span class="dot miss"></span>tor</li>
+          <li><span class="dot"><svg aria-hidden="true"><use href="#tick"/></svg></span>fre</li>
+          <li><span class="dot"><svg aria-hidden="true"><use href="#tick"/></svg></span>lör</li>
+          <li><span class="dot"><svg aria-hidden="true"><use href="#tick"/></svg></span>sön</li>
+        </ol>
+        <p>Torsdagen gick inte som tänkt. Serien lever ändå, för regeln är bara: <b>missa aldrig två gånger i rad.</b></p>
+      </div>
+    </div>
+    <div class="phone"><img src="bilder/hem.jpg" width="432" height="960" alt="Appens hemskärm: dagens kost i ringar, vatten och nästa måltid"></div>
+  </div>
+
+  <ul class="promises" aria-label="Löften">
+    <li><svg aria-hidden="true"><use href="#tick"/></svg>All data stannar i telefonen</li>
+    <li><svg aria-hidden="true"><use href="#tick"/></svg>Inget konto</li>
+    <li><svg aria-hidden="true"><use href="#tick"/></svg>Ingen reklam</li>
+    <li><svg aria-hidden="true"><use href="#tick"/></svg>Ingen spårning</li>
+    <li><svg aria-hidden="true"><use href="#tick"/></svg>Gratis</li>
   </ul>
 
-  <div class="shots">
-    <img src="bilder/hem.jpg" alt="Hem: dagens kost, vatten och nästa pass" loading="lazy">
-    <img src="bilder/idag.jpg" alt="Idag: dagens måltider att bocka av" loading="lazy">
-    <img src="bilder/framsteg.jpg" alt="Framsteg: serier och utmärkelser" loading="lazy">
-    <img src="bilder/teman.jpg" alt="Tolv teman att välja mellan" loading="lazy">
-  </div>
-
   <h2>Vad appen gör</h2>
-  <div class="features">
-    <div class="card"><h3>Kost</h3><p>Planera veckan med måltider och tider, bocka av eller flytta 30 minuter, och se hur planen ligger mot dina dagsmål. Näringsvärden från Livsmedelsverket.</p></div>
-    <div class="card"><h3>Träning</h3><p>Pass och program, över 120 övningar, set för set med vilotimer. Nästa pass utgår från det du gjorde senast.</p></div>
-    <div class="card"><h3>Framsteg utan press</h3><p>Serier enligt "missa aldrig två gånger i rad", och utmärkelser för det du själv styr – aldrig för snabb viktnedgång.</p></div>
-    <div class="card"><h3>Vardagen</h3><p>Vatten med ett tryck, steg från telefonens egen stegräknare eller klockan, och blodtryck, vikt och mått under Kropp.</p></div>
-    <div class="card"><h3>Widgetar och teman</h3><p>Nästa måltid, vatten och steg direkt på hemskärmen, och tolv teman att välja mellan.</p></div>
-    <div class="card"><h3>Planera från datorn</h3><p>Webbläget visar appen i datorns webbläsare i ditt eget wifi – telefonen är servern, inget går via internet.</p></div>
-  </div>
+  <ul class="checks">
+    <li><svg aria-hidden="true"><use href="#ringtick"/></svg><div><h3>Kost</h3><p>Planera veckan med måltider och tider. Bocka av, eller flytta 30 minuter direkt i notisen. Näringsvärden från Livsmedelsverket.</p></div></li>
+    <li><svg aria-hidden="true"><use href="#ringtick"/></svg><div><h3>Träning</h3><p>Pass och program, över 120 övningar, set för set med vilotimer. Nästa pass utgår från det du gjorde senast.</p></div></li>
+    <li><svg aria-hidden="true"><use href="#ringtick"/></svg><div><h3>Framsteg utan press</h3><p>Serier och utmärkelser för det du själv styr – aldrig för snabb viktnedgång.</p></div></li>
+    <li><svg aria-hidden="true"><use href="#ringtick"/></svg><div><h3>Vardagen</h3><p>Vatten med ett tryck, steg från telefonen eller klockan, och blodtryck, vikt och mått under Kropp.</p></div></li>
+    <li><svg aria-hidden="true"><use href="#ringtick"/></svg><div><h3>Widgetar och teman</h3><p>Nästa måltid, vatten och steg på hemskärmen, och tolv teman – från lugnt till steampunk och neon.</p></div></li>
+    <li><svg aria-hidden="true"><use href="#ringtick"/></svg><div><h3>Planera från datorn</h3><p>Webbläget visar appen i datorns webbläsare i ditt eget wifi. Telefonen är servern, inget går via internet.</p></div></li>
+  </ul>
 
-  <div class="download" id="ladda-ner">
-    <h2 style="margin-top:0">Ladda ner</h2>
-    <p><a class="button" href="https://github.com/kakelakel/steadfast-app/releases/latest/download/steadfast.apk">Ladda ner Steadfast</a></p>
-    <p class="note">Version 1.0 (22) · för Android 8 och senare · 5,3 MB. Appen laddas ner som en fil direkt härifrån, inte från Google Play. Tidigare versioner och kontrollsumma finns under <a href="https://github.com/kakelakel/steadfast-app/releases">Releases</a>.</p>
-    <h3>Så installerar du</h3>
-    <ol>
-      <li>Öppna den här sidan på din Android-telefon och tryck <strong>Ladda ner</strong>.</li>
-      <li>Öppna filen när den har laddats ner.</li>
-      <li>Telefonen frågar om webbläsaren får installera appar. Tryck <strong>Inställningar</strong>, slå på <strong>Tillåt från den här källan</strong> och gå tillbaka.</li>
-      <li>Tryck <strong>Installera</strong>. Telefonen kan varna för en okänd app – det är för att den inte kommer från Google Play.</li>
-      <li>Ny version: ladda ner och installera på samma sätt. Din data ligger kvar.</li>
-    </ol>
-    <h3>Få nya versioner automatiskt</h3>
-    <p>Steadfast finns inte i någon appbutik, så telefonen säger inte till när det kommer en ny version. Med gratisappen <a href="https://github.com/ImranR98/Obtainium">Obtainium</a> får du en notis och kan uppdatera med ett tryck: öppna Obtainium, tryck <strong>Lägg till app</strong>, klistra in <code>https://github.com/kakelakel/steadfast-app</code> och tryck <strong>Lägg till</strong>.</p>
-  </div>
-  <div class="trust" id="sakerhet">
-    <h3>Är filen säker?</h3>
-    <p>Det är klokt att vara försiktig med appar utanför Google Play. Så här kan du kontrollera Steadfast:</p>
-    <ul>
-      <li><strong>Ladda bara ner härifrån</strong> eller från <a href="https://github.com/kakelakel/steadfast-app/releases">Releases på GitHub</a>. Steadfast finns inte på andra webbplatser.</li>
-      <li><strong>Kontrollsumma:</strong> varje version har sin SHA-256-summa i versionens text under Releases.</li>
-      <li><strong>Signatur:</strong> alla versioner är signerade med samma nyckel. Android vägrar installera en uppdatering med en annan signatur, så en förfalskad fil kan inte ersätta din app. Nyckelns fingeravtryck (SHA-256):
-        <code class="fp">10:46:A0:6B:B2:C1:25:EF:F9:24:18:29:5E:C4:73:23:24:24:25:C0:E1:B9:94:86:23:08:D0:B0:FE:85:DF:66</code></li>
-    </ul>
-    <details>
-      <summary>Vilka behörigheter appen ber om, och varför</summary>
-      <table>
-        <tr><td>Internet</td><td>Bara för att hämta näringsvärden från Livsmedelsverkets öppna databas, och för webbläget i ditt eget wifi. Ingen data om dig skickas ut.</td></tr>
-        <tr><td>Notiser, vibration, exakta alarm, hålla vaken</td><td>Påminnelser på klockslag du själv väljer, även när skärmen är släckt.</td></tr>
-        <tr><td>Starta efter omstart</td><td>Lägga in dina påminnelser igen när telefonen startats om.</td></tr>
-        <tr><td>Fysisk aktivitet, Health Connect (steg)</td><td>Visa dina steg från telefonens stegräknare eller klockan. Bara steg läses, inget annat.</td></tr>
-        <tr><td>Förgrundstjänst</td><td>Räkna steg när appen är stängd, och hålla igång webbläget medan du använder det.</td></tr>
-        <tr><td>Nätverksstatus</td><td>Se om telefonen är på wifi, för webbläget.</td></tr>
-      </table>
-    </details>
+  <h2>Så ser den ut</h2>
+  <ul class="shots">
+    <li><figure style="margin:0"><img src="bilder/idag.jpg" width="432" height="960" loading="lazy" alt="Idag: dagens måltider att bocka av"><figcaption>Dagens måltider att bocka av</figcaption></figure></li>
+    <li><figure style="margin:0"><img src="bilder/framsteg.jpg" width="432" height="960" loading="lazy" alt="Framsteg: serier och utmärkelser"><figcaption>Serier och utmärkelser</figcaption></figure></li>
+    <li><figure style="margin:0"><img src="bilder/teman.jpg" width="432" height="960" loading="lazy" alt="Tolv teman att välja mellan"><figcaption>Tolv teman</figcaption></figure></li>
+    <li><figure style="margin:0"><img src="bilder/hem.jpg" width="432" height="960" loading="lazy" alt="Hem: dagens kost, vatten och nästa pass"><figcaption>Hem: hela dagen på en skärm</figcaption></figure></li>
+  </ul>
+
+  <h2 id="ladda-ner">Ladda ner</h2>
+  <div class="get">
+    <div class="panel primary">
+      <p style="margin:0 0 6px"><a class="button" href="https://github.com/kakelakel/steadfast-app/releases/latest/download/steadfast.apk"><svg aria-hidden="true"><use href="#down"/></svg>Ladda ner Steadfast</a></p>
+      <p class="meta" data-release="sv">Version 1.0 (22) · för Android 8 och senare · 5,3 MB.</p>
+      <p class="muted" data-downloads="sv" hidden></p>
+      <h3 style="margin-top:22px">Så installerar du</h3>
+      <ol class="steps">
+        <li>Öppna den här sidan på din Android-telefon och tryck <strong>Ladda ner</strong>.</li>
+        <li>Öppna filen när den har laddats ner.</li>
+        <li>Telefonen frågar om webbläsaren får installera appar. Tryck <strong>Inställningar</strong>, slå på <strong>Tillåt från den här källan</strong> och gå tillbaka.</li>
+        <li>Tryck <strong>Installera</strong>. Telefonen kan varna för en okänd app – det är för att den inte kommer från Google Play.</li>
+        <li>Ny version: ladda ner och installera på samma sätt. Din data ligger kvar.</li>
+      </ol>
+      <h3 style="margin-top:22px">Få nya versioner automatiskt</h3>
+      <p style="margin:0">Telefonen säger inte till när det kommer en ny version, eftersom Steadfast inte finns i någon appbutik. Med gratisappen <a href="https://github.com/ImranR98/Obtainium">Obtainium</a> får du en notis och uppdaterar med ett tryck: tryck <strong>Lägg till app</strong>, klistra in <code>https://github.com/kakelakel/steadfast-app</code> och tryck <strong>Lägg till</strong>.</p>
+    </div>
+    <div class="panel" id="sakerhet">
+      <h3>Är filen säker?</h3>
+      <p style="margin:0">Det är klokt att vara försiktig med appar utanför Google Play. Så här kan du kontrollera Steadfast:</p>
+      <ul>
+        <li><strong>Ladda bara ner härifrån</strong> eller från <a href="https://github.com/kakelakel/steadfast-app/releases">Releases på GitHub</a>. Steadfast finns inte på andra webbplatser.</li>
+        <li><strong>Kontrollsumma:</strong> varje version har sin SHA-256-summa i versionens text under Releases.</li>
+        <li><strong>Signatur:</strong> alla versioner är signerade med samma nyckel. Android vägrar installera en uppdatering med en annan signatur, så en förfalskad fil kan inte ersätta din app. Nyckelns fingeravtryck (SHA-256):
+          <code class="fp">10:46:A0:6B:B2:C1:25:EF:F9:24:18:29:5E:C4:73:23:24:24:25:C0:E1:B9:94:86:23:08:D0:B0:FE:85:DF:66</code></li>
+      </ul>
+      <details>
+        <summary>Vilka behörigheter appen ber om, och varför</summary>
+        <table>
+          <tr><td>Internet</td><td>Bara för att hämta näringsvärden från Livsmedelsverkets öppna databas, och för webbläget i ditt eget wifi. Ingen data om dig skickas ut.</td></tr>
+          <tr><td>Notiser, vibration, exakta alarm, hålla vaken</td><td>Påminnelser på klockslag du själv väljer, även när skärmen är släckt.</td></tr>
+          <tr><td>Starta efter omstart</td><td>Lägga in dina påminnelser igen när telefonen startats om.</td></tr>
+          <tr><td>Fysisk aktivitet, Health Connect (steg)</td><td>Visa dina steg från telefonens stegräknare eller klockan. Bara steg läses, inget annat.</td></tr>
+          <tr><td>Förgrundstjänst</td><td>Räkna steg när appen är stängd, och hålla igång webbläget medan du använder det.</td></tr>
+          <tr><td>Nätverksstatus</td><td>Se om telefonen är på wifi, för webbläget.</td></tr>
+        </table>
+      </details>
+    </div>
   </div>
 
   <h2>Din integritet</h2>
-  <p>Allt du skriver in i Steadfast sparas bara på din telefon. Appen har ingen server och skickar aldrig din data någonstans. Läs mer i <a href="privacy/">integritetspolicyn</a>.</p>
-  <p class="note">Steadfast ger inga medicinska råd och ersätter inte vård. Appen är gjord för vuxna, 18 år och äldre.</p>
+  <p class="measure">Allt du skriver in i Steadfast sparas bara på din telefon. Appen har ingen server och skickar aldrig din data någonstans. Läs mer i <a href="privacy/">integritetspolicyn</a>.</p>
+  <p class="measure muted">Steadfast ger inga medicinska råd och ersätter inte vård. Appen är gjord för vuxna, 18 år och äldre.</p>
 </section>
 
 <section lang="en" id="en">
   <h2>Steadfast in English</h2>
-  <p class="lead">Steadfast helps you stick to a plan you have chosen yourself – for meals, routines and training. Not a diet, and not an app that tells you what to eat. Just calm support for doing what you decided. The app is available in Swedish and English.</p>
-  <p>Plan meals and tasks, check them off, and follow workouts set by set. Track water, steps (from the phone's own step counter or a watch), blood pressure, weight and measurements. Widgets on the home screen, twelve themes, and a web mode for planning from a computer on your own Wi-Fi.</p>
-  <ul class="facts">
-    <li>All data stays on your phone</li><li>No account</li><li>No ads</li><li>No tracking</li><li>Free</li>
+  <p class="measure" style="font-size:20px">Steadfast helps you stick to a plan you have chosen yourself – for meals, routines and training. Not a diet, and not an app that tells you what to eat. Available in Swedish and English.</p>
+  <p class="measure">Plan meals and tasks, check them off, and follow workouts set by set. Streaks follow one rule: never miss twice in a row. Track water, steps, blood pressure, weight and measurements. Widgets, twelve themes, and a web mode for planning from a computer on your own Wi-Fi.</p>
+  <ul class="promises" aria-label="Promises">
+    <li><svg aria-hidden="true"><use href="#tick"/></svg>All data stays on your phone</li>
+    <li><svg aria-hidden="true"><use href="#tick"/></svg>No account</li>
+    <li><svg aria-hidden="true"><use href="#tick"/></svg>No ads</li>
+    <li><svg aria-hidden="true"><use href="#tick"/></svg>No tracking</li>
+    <li><svg aria-hidden="true"><use href="#tick"/></svg>Free</li>
   </ul>
-  <div class="shots">
-    <img src="bilder/home.jpg" alt="Home: today's nutrition, water and next workout" loading="lazy">
-    <img src="bilder/today.jpg" alt="Today: the day's meals to check off" loading="lazy">
-    <img src="bilder/progress.jpg" alt="Progress: streaks and awards" loading="lazy">
-    <img src="bilder/themes.jpg" alt="Twelve themes to choose from" loading="lazy">
+  <ul class="shots" style="margin-top:28px">
+    <li><img src="bilder/home.jpg" width="432" height="960" loading="lazy" alt="Home: today's nutrition, water and next workout"></li>
+    <li><img src="bilder/today.jpg" width="432" height="960" loading="lazy" alt="Today: the day's meals to check off"></li>
+    <li><img src="bilder/progress.jpg" width="432" height="960" loading="lazy" alt="Progress: streaks and awards"></li>
+    <li><img src="bilder/themes.jpg" width="432" height="960" loading="lazy" alt="Twelve themes to choose from"></li>
+  </ul>
+  <div class="get">
+    <div class="panel primary">
+      <p style="margin:0 0 6px"><a class="button" href="https://github.com/kakelakel/steadfast-app/releases/latest/download/steadfast.apk"><svg aria-hidden="true"><use href="#down"/></svg>Download Steadfast</a></p>
+      <p class="meta" data-release="en">Version 1.0 (22) · for Android 8 and later · 5.3 MB.</p>
+      <p class="muted" data-downloads="en" hidden></p>
+      <p>The app is downloaded as a file directly from here, not from Google Play. When you open it, allow your browser to install apps, then tap Install. Your phone may warn about an unknown app because it doesn't come from Google Play. Updates are installed the same way, and your data is kept.</p>
+      <h3 style="margin-top:22px">Get updates automatically</h3>
+      <p style="margin:0">With the free app <a href="https://github.com/ImranR98/Obtainium">Obtainium</a> you get a notification and can update with one tap: tap <strong>Add App</strong>, paste <code>https://github.com/kakelakel/steadfast-app</code> and tap <strong>Add</strong>.</p>
+    </div>
+    <div class="panel" id="security">
+      <h3>Is the file safe?</h3>
+      <ul>
+        <li><strong>Only download from here</strong> or from <a href="https://github.com/kakelakel/steadfast-app/releases">Releases on GitHub</a>. Steadfast is not published anywhere else.</li>
+        <li><strong>Checksum:</strong> each version lists its SHA-256 in its release notes.</li>
+        <li><strong>Signature:</strong> every version is signed with the same key, and Android refuses an update with a different signature, so a tampered file can't replace your app. Signing certificate fingerprint (SHA-256):
+          <code class="fp">10:46:A0:6B:B2:C1:25:EF:F9:24:18:29:5E:C4:73:23:24:24:25:C0:E1:B9:94:86:23:08:D0:B0:FE:85:DF:66</code></li>
+      </ul>
+      <details>
+        <summary>Which permissions the app asks for, and why</summary>
+        <table>
+          <tr><td>Internet</td><td>Only to fetch nutrition values from the Swedish Food Agency's open database, and for web mode on your own Wi-Fi. No data about you is sent out.</td></tr>
+          <tr><td>Notifications, vibration, exact alarms, wake lock</td><td>Reminders at times you choose, even with the screen off.</td></tr>
+          <tr><td>Run at startup</td><td>Restore your reminders after the phone restarts.</td></tr>
+          <tr><td>Physical activity, Health Connect (steps)</td><td>Show steps from the phone's step counter or your watch. Only steps are read.</td></tr>
+          <tr><td>Foreground service</td><td>Count steps while the app is closed, and keep web mode running while you use it.</td></tr>
+          <tr><td>Network state</td><td>Check whether the phone is on Wi-Fi, for web mode.</td></tr>
+        </table>
+      </details>
+    </div>
   </div>
-  <div class="download">
-    <h2 style="margin-top:0">Download</h2>
-    <p><a class="button" href="https://github.com/kakelakel/steadfast-app/releases/latest/download/steadfast.apk">Download Steadfast</a></p>
-    <p class="note">Version 1.0 (22) · for Android 8 and later · 5.3 MB. The app is downloaded as a file directly from here, not from Google Play. When you open it, allow your browser to install apps, then tap Install. Your phone may warn about an unknown app because it doesn't come from Google Play. Updates are installed the same way, and your data is kept.</p>
-    <h3>Get updates automatically</h3>
-    <p>Steadfast isn't in an app store, so your phone won't tell you about new versions. With the free app <a href="https://github.com/ImranR98/Obtainium">Obtainium</a> you get a notification and can update with one tap: open Obtainium, tap <strong>Add App</strong>, paste <code>https://github.com/kakelakel/steadfast-app</code> and tap <strong>Add</strong>.</p>
-  </div>
-  <div class="trust" id="security">
-    <h3>Is the file safe?</h3>
-    <ul>
-      <li><strong>Only download from here</strong> or from <a href="https://github.com/kakelakel/steadfast-app/releases">Releases on GitHub</a>. Steadfast is not published anywhere else.</li>
-      <li><strong>Checksum:</strong> each version lists its SHA-256 in its release notes.</li>
-      <li><strong>Signature:</strong> every version is signed with the same key, and Android refuses an update with a different signature, so a tampered file can't replace your app. Signing certificate fingerprint (SHA-256):
-        <code class="fp">10:46:A0:6B:B2:C1:25:EF:F9:24:18:29:5E:C4:73:23:24:24:25:C0:E1:B9:94:86:23:08:D0:B0:FE:85:DF:66</code></li>
-    </ul>
-    <details>
-      <summary>Which permissions the app asks for, and why</summary>
-      <table>
-        <tr><td>Internet</td><td>Only to fetch nutrition values from the Swedish Food Agency's open database, and for web mode on your own Wi-Fi. No data about you is sent out.</td></tr>
-        <tr><td>Notifications, vibration, exact alarms, wake lock</td><td>Reminders at times you choose, even with the screen off.</td></tr>
-        <tr><td>Run at startup</td><td>Restore your reminders after the phone restarts.</td></tr>
-        <tr><td>Physical activity, Health Connect (steps)</td><td>Show steps from the phone's step counter or your watch. Only steps are read.</td></tr>
-        <tr><td>Foreground service</td><td>Count steps while the app is closed, and keep web mode running while you use it.</td></tr>
-        <tr><td>Network state</td><td>Check whether the phone is on Wi-Fi, for web mode.</td></tr>
-      </table>
-    </details>
-  </div>
-  <p>Everything you enter stays on your phone; the app has no server and never sends your data anywhere. Read the <a href="privacy/#en">privacy policy</a>. Steadfast gives no medical advice and does not replace healthcare. Made for adults aged 18 and over.</p>
+  <p class="measure muted" style="margin-top:28px">Everything you enter stays on your phone; the app has no server and never sends your data anywhere. Read the <a href="privacy/#en">privacy policy</a>. Steadfast gives no medical advice and does not replace healthcare. Made for adults aged 18 and over.</p>
 </section>
 </main>
 
 <footer>
   <p>Kontakt / contact: <a href="mailto:steadfasttheapp@gmail.com">steadfasttheapp@gmail.com</a> · <a href="privacy/">Integritetspolicy / Privacy policy</a></p>
-  <p>Sidan använder inga kakor och ingen spårning. / This page uses no cookies and no tracking.</p>
+  <p>Sidan använder inga kakor och ingen spårning. Senaste versionen hämtas från GitHub, som också är värd för sidan. / This page uses no cookies and no tracking. The latest version info is read from GitHub, which also hosts this page.</p>
 </footer>
 </div>
+
+<script>
+/* Visar senaste versionen och antal nedladdningar direkt från GitHub.
+   Fungerar inte anropet står texten ovan kvar som den är.
+   Antalet visas först när det når VISA_FRAN, så att sidan inte skyltar med ett litet tal. */
+(function () {
+  var VISA_FRAN = 100;
+  var API = "https://api.github.com/repos/kakelakel/steadfast-app/releases?per_page=100";
+  if (!window.fetch) return;
+  fetch(API, { headers: { "Accept": "application/vnd.github+json" } })
+    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function (releases) {
+      var list = releases.filter(function (r) { return !r.draft && !r.prerelease; });
+      if (!list.length) return;
+      var total = 0, latest = list[0], apk = null;
+      list.forEach(function (r) {
+        (r.assets || []).forEach(function (a) { if (a.name === "steadfast.apk") total += a.download_count; });
+      });
+      (latest.assets || []).forEach(function (a) { if (a.name === "steadfast.apk") apk = a; });
+      var m = /^Steadfast\s+(.+)$/.exec(latest.name || "");
+      var version = m ? m[1] : (latest.tag_name || "").replace(/^v/, "");
+      var d = new Date(latest.published_at);
+      var mb = apk ? apk.size / 1048576 : null;
+      var text = {
+        sv: "Version " + version + " · släppt " + d.toLocaleDateString("sv-SE", { day: "numeric", month: "long" }) +
+            " · för Android 8 och senare" + (mb ? " · " + mb.toFixed(1).replace(".", ",") + " MB" : "") + ".",
+        en: "Version " + version + " · released " + d.toLocaleDateString("en-GB", { day: "numeric", month: "long" }) +
+            " · for Android 8 and later" + (mb ? " · " + mb.toFixed(1) + " MB" : "") + "."
+      };
+      document.querySelectorAll("[data-release]").forEach(function (el) {
+        var free = el.textContent.indexOf("Gratis") > -1 ? " Gratis." : "";
+        el.textContent = text[el.getAttribute("data-release")] + free;
+      });
+      if (total >= VISA_FRAN) {
+        document.querySelectorAll("[data-downloads]").forEach(function (el) {
+          var sv = el.getAttribute("data-downloads") === "sv";
+          el.innerHTML = (sv ? "Nedladdad " : "Downloaded ") + "<strong>" + total.toLocaleString(sv ? "sv-SE" : "en-GB") + "</strong>" + (sv ? " gånger." : " times.");
+          el.hidden = false;
+        });
+      }
+    })
+    .catch(function () {});
+})();
+</script>
 </body>
 </html>
