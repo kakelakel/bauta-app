@@ -151,6 +151,15 @@
   .extras { display:flex; flex-wrap:wrap; gap:10px; list-style:none; padding:0; margin:22px 0 0; }
   .extras li { background:var(--surface); border:1px solid var(--line); border-radius:999px; padding:8px 16px; font-size:16px; }
 
+  /* Vanliga frågor */
+  .faq { max-width:70ch; }
+  .faq details { border-top:1px solid var(--line); padding:14px 0; margin:0; }
+  .faq details:last-child { border-bottom:1px solid var(--line); }
+  .faq summary { font-size:19px; color:var(--ink); list-style:none; display:flex; justify-content:space-between; gap:16px; }
+  .faq summary::-webkit-details-marker { display:none; }
+  .faq summary::after { content:"+"; color:var(--accent); font-size:24px; line-height:1; }
+  .faq details[open] summary::after { content:"–"; }
+  .faq details p { margin:10px 0 0; color:var(--muted); }
   /* Kort som leder till demosidan */
   .teaser { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:28px; align-items:center; background:var(--surface); border:2px solid var(--accent); border-radius:28px; padding:28px 32px; margin-top:56px; }
   .teaser h2 { margin:0 0 6px; font-size:clamp(26px,3.2vw,34px); }
@@ -197,7 +206,7 @@
 <div class="wrap">
 <header class="top">
   <a class="brand" href="./"><img src="bilder/ikon.png" alt="">Bauta</a>
-  <nav aria-label="Meny"><a href="demo/">Prova</a><a class="hide-s" href="#funktioner">Funktioner</a><a href="#ladda-ner">Ladda ner</a><a href="#en" hreflang="en">English</a></nav>
+  <nav aria-label="Meny"><a href="demo/">Prova</a><a class="hide-s" href="#funktioner">Funktioner</a><a href="#ladda-ner">Ladda ner</a><a class="hide-s" href="#fragor">Frågor</a><a href="#en" hreflang="en">English</a></nav>
 </header>
 
 <main>
@@ -210,7 +219,7 @@
         <a class="button" href="https://github.com/kakelakel/bauta-app/releases/latest/download/bauta.apk"><svg aria-hidden="true"><use href="#down"/></svg>Ladda ner för Android</a>
         <a href="#ladda-ner">Så installerar du</a>
       </div>
-      <p class="meta" data-release="sv">Version 1.0 (28) · för Android 8 och senare · 5,3 MB. Gratis.</p>
+      <p class="meta" data-release="sv">Version 1.0 (29) · för Android 8 och senare · 5,4 MB. Gratis.</p>
 
       <div class="week" aria-label="Exempel på en vecka i appen">
         <ol class="days">
@@ -265,6 +274,7 @@
       <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Vatten</b> med ett tryck och egna påminnelser.</span></li>
     </ul></article>
     <article class="part reveal"><header><svg aria-hidden="true"><use href="#i-stat"/></svg><h3>Statistik och framsteg</h3></header><ul>
+      <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Veckan</b> – en lugn återblick varje vecka på det du gjort.</span></li>
       <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Serier</b> med regeln missa aldrig två gånger i rad.</span></li>
       <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Utmärkelser</b> för det du själv styr – aldrig för snabb viktnedgång.</span></li>
       <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Diagram</b> för vikt, mått, steg, vatten, kost och träning – spara dina favoriter.</span></li>
@@ -280,13 +290,15 @@
     <li><figure style="margin:0"><img src="bilder/framsteg.jpg" width="432" height="960" loading="lazy" alt="Framsteg: serier och utmärkelser"><figcaption>Serier och utmärkelser</figcaption></figure></li>
     <li><figure style="margin:0"><img src="bilder/teman.jpg" width="432" height="960" loading="lazy" alt="Tolv teman att välja mellan"><figcaption>Tolv teman</figcaption></figure></li>
     <li><figure style="margin:0"><img src="bilder/hem.jpg" width="432" height="960" loading="lazy" alt="Hem: dagens kost, vatten och nästa pass"><figcaption>Hem: hela dagen på en skärm</figcaption></figure></li>
+    <li><figure style="margin:0"><img src="bilder/pass.png" width="432" height="960" loading="lazy" alt="Ett pass: set för set med vilotimer"><figcaption>Passet: set för set med vilotimer</figcaption></figure></li>
+    <li><figure style="margin:0"><img src="bilder/veckan.png" width="432" height="960" loading="lazy" alt="Veckan: en lugn återblick på sju dagar"><figcaption>Veckan: en lugn återblick</figcaption></figure></li>
   </ul>
 
   <h2 id="ladda-ner">Ladda ner</h2>
   <div class="get reveal">
     <div class="panel primary">
       <p style="margin:0 0 6px"><a class="button" href="https://github.com/kakelakel/bauta-app/releases/latest/download/bauta.apk"><svg aria-hidden="true"><use href="#down"/></svg>Ladda ner Bauta</a></p>
-      <p class="meta" data-release="sv">Version 1.0 (28) · för Android 8 och senare · 5,3 MB.</p>
+      <p class="meta" data-release="sv">Version 1.0 (29) · för Android 8 och senare · 5,4 MB.</p>
       <p class="meta"><a href="changelog/">Vad är nytt? Se versionshistoriken</a> · <strong>Hade du Steadfast?</strong> Appen heter nu Bauta – <a href="changelog/">så flyttar du din data</a>.</p>
       <p class="muted" data-downloads="sv" hidden></p>
       <h3 style="margin-top:22px">Så installerar du</h3>
@@ -321,6 +333,18 @@
         </table>
       </details>
     </div>
+  </div>
+
+  <h2 id="fragor" class="reveal">Vanliga frågor</h2>
+  <div class="faq reveal">
+    <details><summary>Kostar det något?</summary><p>Nej. Bauta är gratis, utan reklam och utan köp i appen.</p></details>
+    <details><summary>Var finns min data?</summary><p>Bara i din telefon. Appen har ingen server och inget konto. Den använder internet bara för att hämta näringsvärden från Livsmedelsverket när du söker livsmedel, och för webbläget i ditt eget wifi om du slår på det.</p></details>
+    <details><summary>Hur byter jag telefon?</summary><p>Gör en säkerhetskopia i den gamla telefonen under Inställningar → Säkerhetskopiering → Exportera (ta gärna med bilderna), eller använd den automatiska säkerhetskopian. Installera Bauta på den nya telefonen och tryck <strong>Läs in säkerhetskopia</strong> redan på startguidens första sida – då kommer allt tillbaka: schema, träning, mått och serier.</p></details>
+    <details><summary>Hur får jag nya versioner?</summary><p>Ladda ner den senaste versionen här och installera den ovanpå den gamla – din data ligger kvar. Med gratisappen <a href="https://github.com/ImranR98/Obtainium">Obtainium</a> får du en notis när det kommer en ny version. Vad som är nytt står i <a href="changelog/">versionshistoriken</a>.</p></details>
+    <details><summary>Varför finns den inte på Google Play?</summary><p>Bauta görs av en privatperson och laddas ner direkt härifrån. Filen är signerad med samma nyckel varje gång, så Android installerar bara uppdateringar som kommer från samma källa. Se <a href="#sakerhet">Är filen säker?</a></p></details>
+    <details><summary>Finns den för iPhone?</summary><p>Nej, Bauta finns bara för Android 8 och senare. Du kan ändå <a href="demo/">prova demon</a> i webbläsaren på vilken telefon eller dator som helst.</p></details>
+    <details><summary>Kan jag använda appen på engelska?</summary><p>Ja. Appen följer telefonens språk – svenska om telefonen är på svenska, annars engelska. Från Android 13 kan du välja språk för bara Bauta under telefonens inställningar.</p></details>
+    <details><summary>Ger appen kostråd?</summary><p>Nej. Bauta hjälper dig att följa en plan du själv har valt och ger inga medicinska råd eller kostråd. Har du en sjukdom, är gravid eller har eller har haft en ätstörning: prata med vården innan du ändrar din kost.</p></details>
   </div>
 
   <h2>Din integritet</h2>
@@ -368,6 +392,7 @@
       <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Water</b> with one tap and your own reminders.</span></li>
     </ul></article>
     <article class="part reveal"><header><svg aria-hidden="true"><use href="#i-stat"/></svg><h3>Statistics and progress</h3></header><ul>
+      <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Your week</b> – a calm weekly look back at what you did.</span></li>
       <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Streaks</b> with the rule never miss twice in a row.</span></li>
       <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Awards</b> for what you control – never for fast weight loss.</span></li>
       <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Charts</b> for weight, measurements, steps, water, food and training – save your favourites.</span></li>
@@ -381,11 +406,13 @@
     <li><img src="bilder/today.jpg" width="432" height="960" loading="lazy" alt="Today: the day's meals to check off"></li>
     <li><img src="bilder/progress.jpg" width="432" height="960" loading="lazy" alt="Progress: streaks and awards"></li>
     <li><img src="bilder/themes.jpg" width="432" height="960" loading="lazy" alt="Twelve themes to choose from"></li>
+    <li><img src="bilder/workout.png" width="432" height="960" loading="lazy" alt="A workout: set by set with a rest timer"></li>
+    <li><img src="bilder/week.png" width="432" height="960" loading="lazy" alt="Your week: a calm look back at seven days"></li>
   </ul>
   <div class="get reveal">
     <div class="panel primary">
       <p style="margin:0 0 6px"><a class="button" href="https://github.com/kakelakel/bauta-app/releases/latest/download/bauta.apk"><svg aria-hidden="true"><use href="#down"/></svg>Download Bauta</a></p>
-      <p class="meta" data-release="en">Version 1.0 (28) · for Android 8 and later · 5.3 MB.</p>
+      <p class="meta" data-release="en">Version 1.0 (29) · for Android 8 and later · 5.4 MB.</p>
       <p class="meta"><a href="changelog/#en">What's new? See the changelog</a> · <strong>Had Steadfast?</strong> The app is now called Bauta – <a href="changelog/#en">how to move your data</a>.</p>
       <p class="muted" data-downloads="en" hidden></p>
       <p>The app is downloaded as a file directly from here, not from Google Play. When you open it, allow your browser to install apps, then tap Install. Your phone may warn about an unknown app because it doesn't come from Google Play. Updates are installed the same way, and your data is kept.</p>
@@ -412,6 +439,17 @@
         </table>
       </details>
     </div>
+  </div>
+  <h2 id="faq" class="reveal">Frequently asked questions</h2>
+  <div class="faq reveal">
+    <details><summary>Does it cost anything?</summary><p>No. Bauta is free, without ads and without in-app purchases.</p></details>
+    <details><summary>Where is my data?</summary><p>Only on your phone. The app has no server and no account. It only uses the internet to fetch nutrition values from the Swedish Food Agency when you look up foods, and for web mode on your own Wi-Fi if you turn it on.</p></details>
+    <details><summary>How do I change phone?</summary><p>Make a backup on the old phone under Settings → Backup → Export (include the photos if you like), or use the automatic backup. Install Bauta on the new phone and tap <strong>Read in a backup</strong> on the first page of the setup guide – everything comes back: schedule, training, measurements and streaks.</p></details>
+    <details><summary>How do I get new versions?</summary><p>Download the latest version here and install it on top of the old one – your data is kept. With the free app <a href="https://github.com/ImranR98/Obtainium">Obtainium</a> you get a notification when a new version is out. What is new is in the <a href="changelog/#en">changelog</a>.</p></details>
+    <details><summary>Why is it not on Google Play?</summary><p>Bauta is made by a private person and downloaded directly from here. The file is signed with the same key every time, so Android only installs updates from the same source. See <a href="#security">Is the file safe?</a></p></details>
+    <details><summary>Is there an iPhone version?</summary><p>No, Bauta is only for Android 8 and later. You can still <a href="demo/?lang=en">try the demo</a> in the browser on any phone or computer.</p></details>
+    <details><summary>Can I use the app in Swedish?</summary><p>Yes. The app follows the phone's language – Swedish if the phone is set to Swedish, otherwise English. From Android 13 you can choose a language for Bauta alone in the phone's settings.</p></details>
+    <details><summary>Does the app give dietary advice?</summary><p>No. Bauta helps you follow a plan you have chosen yourself and gives no medical or dietary advice. If you have an illness, are pregnant or have or have had an eating disorder: talk to healthcare before changing your diet.</p></details>
   </div>
   <p class="measure muted" style="margin-top:28px">Everything you enter stays on your phone; the app has no server and never sends your data anywhere. Read the <a href="privacy/#en">privacy policy</a>. Bauta gives no medical advice and does not replace healthcare. Made for adults aged 18 and over.</p>
 </section>
