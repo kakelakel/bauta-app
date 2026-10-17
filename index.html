@@ -23,6 +23,7 @@
 {"@context":"https://schema.org","@type":"MobileApplication","name":"Bauta","operatingSystem":"Android 8.0+","applicationCategory":"HealthApplication","inLanguage":["sv","en"],"offers":{"@type":"Offer","price":"0","priceCurrency":"SEK"},"url":"https://kakelakel.github.io/bauta-app/","downloadUrl":"https://github.com/kakelakel/bauta-app/releases/latest","image":"https://kakelakel.github.io/bauta-app/bilder/ikon.png","description":"Följ din egen plan för kost och träning, en dag i taget. Inget konto, ingen reklam, ingen spårning."}
 </script>
 <link rel="preload" href="fonts/atkinson-hyperlegible-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+<script>document.documentElement.classList.add('js');</script>
 <style>
   /* Typsnittet ligger på sidan själv (Atkinson Hyperlegible, SIL OFL, fonts/OFL.txt).
      Siffrorna tas från systemets typsnitt, eftersom Atkinsons nolla är överstruken och liknar Ø.
@@ -128,6 +129,47 @@
   footer { margin-top:96px; padding:28px 0 56px; border-top:1px solid var(--line); color:var(--muted); font-size:16px; }
   footer p { margin:4px 0; }
 
+
+  /* Fast meny överst */
+  .top { position:sticky; top:0; z-index:10; background:color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); margin:0 -20px; padding:14px 20px; }
+  .top nav { display:flex; gap:20px; flex-wrap:wrap; justify-content:flex-end; }
+  .top nav a { text-decoration:none; font-weight:700; }
+  .top nav a:hover { text-decoration:underline; }
+  section[id], h2[id] { scroll-margin-top:84px; }
+
+  /* Funktioner per del */
+  .parts { display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:20px; }
+  .part { background:var(--surface); border:1px solid var(--line); border-radius:24px; padding:26px 26px 20px; }
+  .part header { display:flex; align-items:center; gap:14px; margin-bottom:10px; }
+  .part header svg { width:44px; height:44px; flex:none; padding:10px; border-radius:14px; background:var(--ring); color:var(--accent); }
+  .part h3 { margin:0; font-size:23px; }
+  .part ul { margin:0; padding:0; list-style:none; }
+  .part li { display:grid; grid-template-columns:20px minmax(0,1fr); gap:10px; padding:7px 0; border-top:1px solid var(--line); color:var(--muted); font-size:17px; }
+  .part li:first-child { border-top:0; }
+  .part li svg { width:20px; height:20px; margin-top:4px; color:var(--accent); }
+  .part li b { color:var(--ink); font-weight:700; }
+  .extras { display:flex; flex-wrap:wrap; gap:10px; list-style:none; padding:0; margin:22px 0 0; }
+  .extras li { background:var(--surface); border:1px solid var(--line); border-radius:999px; padding:8px 16px; font-size:16px; }
+
+  /* Kort som leder till demosidan */
+  .teaser { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:28px; align-items:center; background:var(--surface); border:2px solid var(--accent); border-radius:28px; padding:28px 32px; margin-top:56px; }
+  .teaser h2 { margin:0 0 6px; font-size:clamp(26px,3.2vw,34px); }
+  .teaser p { margin:0; color:var(--muted); }
+  .teaser .mini { display:flex; gap:10px; }
+  .teaser .mini span { width:46px; height:46px; border-radius:50%; display:grid; place-items:center; background:var(--accent); color:var(--accent-ink); }
+  .teaser .mini span.half { background:conic-gradient(var(--accent) 0 55%, var(--ring) 0); }
+  .teaser .mini svg { width:22px; height:22px; }
+  /* Mjuk inglidning när avsnitten kommer fram */
+  @media (prefers-reduced-motion: no-preference) {
+    .js .reveal { opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease; }
+    .js .reveal.in { opacity:1; transform:none; }
+  }
+
+  @media (max-width:860px) {
+    .parts, .teaser { grid-template-columns:minmax(0,1fr); }
+    .top nav { gap:14px; font-size:15px; }
+    .top nav .hide-s { display:none; }
+  }
   @media (max-width:860px) {
     .hero { grid-template-columns:minmax(0,1fr); gap:44px; padding-top:12px; }
     .phone { width:min(280px,80%); }
@@ -145,13 +187,17 @@
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="tick" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="ringtick" viewBox="0 0 32 32"><circle cx="16" cy="16" r="13.5" fill="none" stroke="currentColor" stroke-width="3"/><path d="M10 16.5l4 4 8-9" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-kost" viewBox="0 0 24 24"><path d="M7 3v8m-3-8v5a3 3 0 0 0 6 0V3M7 11v10M17 3c-2 2-3 5-3 8h3v10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-tran" viewBox="0 0 24 24"><path d="M6.5 6.5v11M3.5 9v6M17.5 6.5v11M20.5 9v6M6.5 12h11" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+  <symbol id="i-kropp" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8.5 10a4.5 4.5 0 0 1 7 0l-2.2 2.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-stat" viewBox="0 0 24 24"><path d="M5 20V12M10 20V6M15 20v-9M20 20V9" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
   <symbol id="down" viewBox="0 0 24 24"><path d="M12 4v11m0 0l-5-5m5 5l5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
 </svg>
 
 <div class="wrap">
 <header class="top">
   <a class="brand" href="./"><img src="bilder/ikon.png" alt="">Bauta</a>
-  <nav><a href="#en" hreflang="en">English</a></nav>
+  <nav aria-label="Meny"><a href="demo/">Prova</a><a class="hide-s" href="#funktioner">Funktioner</a><a href="#ladda-ner">Ladda ner</a><a href="#en" hreflang="en">English</a></nav>
 </header>
 
 <main>
@@ -190,17 +236,45 @@
     <li><svg aria-hidden="true"><use href="#tick"/></svg>Gratis</li>
   </ul>
 
-  <h2>Vad appen gör</h2>
-  <ul class="checks">
-    <li><svg aria-hidden="true"><use href="#ringtick"/></svg><div><h3>Kost</h3><p>Planera veckan med måltider och tider. Bocka av, eller flytta 30 minuter direkt i notisen. Näringsvärden från Livsmedelsverket.</p></div></li>
-    <li><svg aria-hidden="true"><use href="#ringtick"/></svg><div><h3>Träning</h3><p>Pass och program, över 120 övningar, set för set med vilotimer. Nästa pass utgår från det du gjorde senast.</p></div></li>
-    <li><svg aria-hidden="true"><use href="#ringtick"/></svg><div><h3>Framsteg utan press</h3><p>Serier och utmärkelser för det du själv styr – aldrig för snabb viktnedgång.</p></div></li>
-    <li><svg aria-hidden="true"><use href="#ringtick"/></svg><div><h3>Vardagen</h3><p>Vatten med ett tryck, steg från telefonen eller klockan, och blodtryck, vikt och mått under Kropp.</p></div></li>
-    <li><svg aria-hidden="true"><use href="#ringtick"/></svg><div><h3>Widgetar och teman</h3><p>Nästa måltid, vatten och steg på hemskärmen, och tolv teman – från lugnt till steampunk och neon.</p></div></li>
-    <li><svg aria-hidden="true"><use href="#ringtick"/></svg><div><h3>Planera från datorn</h3><p>Webbläget visar appen i datorns webbläsare i ditt eget wifi. Telefonen är servern, inget går via internet.</p></div></li>
-  </ul>
+  <div class="teaser reveal" id="prova">
+    <div><h2>Prova appen i webbläsaren</h2><p>Bocka av en dag med måltider, fyll på vatten och kör ett pass i telefonen – eller planera veckan i webbläget. På en egen sida, utan att installera något.</p><p style="margin-top:16px"><a class="button" href="demo/">Öppna demon</a></p></div>
+    <div class="mini" aria-hidden="true"><span><svg><use href="#tick"/></svg></span><span><svg><use href="#tick"/></svg></span><span class="half"></span></div>
+  </div>
 
-  <h2>Så ser den ut</h2>
+  <h2 id="funktioner" class="reveal">Funktioner</h2>
+  <div class="parts">
+    <article class="part reveal"><header><svg aria-hidden="true"><use href="#i-kost"/></svg><h3>Kost</h3></header><ul>
+      <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Din vecka som dagtyper</b> – t.ex. vardag och helg, med måltider och tider.</span></li>
+      <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Påminnelser i rätt tid</b> – bocka av eller flytta 30 minuter direkt i notisen.</span></li>
+      <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Näringsvärden från Livsmedelsverket</b> – lägg till ingredienser i gram, så räknas kcal och makron ut.</span></li>
+      <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Utanför planen</b> – åt du något annat? Registrera det, så stämmer dagens intag.</span></li>
+      <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Räkna ut dagsmål</b> – kalkylatorn föreslår kcal och makron och visar hur.</span></li>
+    </ul></article>
+    <article class="part reveal"><header><svg aria-hidden="true"><use href="#i-tran"/></svg><h3>Träning</h3></header><ul>
+      <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>182 övningar</b> med instruktioner – styrka, calisthenics, rörlighet och förebyggande för axlar och knän.</span></li>
+      <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Programmallar</b> – Bygga styrka, Bygga muskler, Träna med kroppen, Calisthenics och Starka axlar och knän.</span></li>
+      <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Set för set med vilotimer</b>, uppvärmningsset och superset.</span></li>
+      <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Nästa pass utgår från det förra</b> – vikter och reps du gjorde senast.</span></li>
+      <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Veckomål</b> för antal pass.</span></li>
+    </ul></article>
+    <article class="part reveal"><header><svg aria-hidden="true"><use href="#i-kropp"/></svg><h3>Kropp</h3></header><ul>
+      <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Vikt och mått</b> i kg och cm, eller lb och tum.</span></li>
+      <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Blodtryck och puls</b>.</span></li>
+      <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Bilder vid inmätning</b> – bara i appen, gärna suddiga i galleriet.</span></li>
+      <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Steg</b> från telefonens stegräknare eller från klockan via Health Connect.</span></li>
+      <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Vatten</b> med ett tryck och egna påminnelser.</span></li>
+    </ul></article>
+    <article class="part reveal"><header><svg aria-hidden="true"><use href="#i-stat"/></svg><h3>Statistik och framsteg</h3></header><ul>
+      <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Serier</b> med regeln missa aldrig två gånger i rad.</span></li>
+      <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Utmärkelser</b> för det du själv styr – aldrig för snabb viktnedgång.</span></li>
+      <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Diagram</b> för vikt, mått, steg, vatten, kost och träning – spara dina favoriter.</span></li>
+      <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Export till Excel</b> när du vill titta närmare.</span></li>
+    </ul></article>
+  </div>
+  <h3 class="reveal" style="margin-top:28px">Dessutom</h3>
+  <ul class="extras reveal"><li>Widgetar på hemskärmen</li><li>Tolv teman</li><li>Webbläge – planera från datorn</li><li>Automatisk säkerhetskopia</li><li>Startguide och guidad visning</li><li>Svenska och engelska</li><li>Stor text och TalkBack</li></ul>
+
+  <h2 class="reveal">Så ser den ut</h2>
   <ul class="shots">
     <li><figure style="margin:0"><img src="bilder/idag.jpg" width="432" height="960" loading="lazy" alt="Idag: dagens måltider att bocka av"><figcaption>Dagens måltider att bocka av</figcaption></figure></li>
     <li><figure style="margin:0"><img src="bilder/framsteg.jpg" width="432" height="960" loading="lazy" alt="Framsteg: serier och utmärkelser"><figcaption>Serier och utmärkelser</figcaption></figure></li>
@@ -209,7 +283,7 @@
   </ul>
 
   <h2 id="ladda-ner">Ladda ner</h2>
-  <div class="get">
+  <div class="get reveal">
     <div class="panel primary">
       <p style="margin:0 0 6px"><a class="button" href="https://github.com/kakelakel/bauta-app/releases/latest/download/bauta.apk"><svg aria-hidden="true"><use href="#down"/></svg>Ladda ner Bauta</a></p>
       <p class="meta" data-release="sv">Version 1.0 (28) · för Android 8 och senare · 5,3 MB.</p>
@@ -265,13 +339,50 @@
     <li><svg aria-hidden="true"><use href="#tick"/></svg>No tracking</li>
     <li><svg aria-hidden="true"><use href="#tick"/></svg>Free</li>
   </ul>
+  <div class="teaser reveal" id="try">
+    <div><h2>Try the app in your browser</h2><p>Check off a day of meals, add water and do a workout on the phone – or plan the week in web mode. On a page of its own, without installing anything.</p><p style="margin-top:16px"><a class="button" href="demo/?lang=en">Open the demo</a></p></div>
+    <div class="mini" aria-hidden="true"><span><svg><use href="#tick"/></svg></span><span><svg><use href="#tick"/></svg></span><span class="half"></span></div>
+  </div>
+
+  <h2 id="features" class="reveal">Features</h2>
+  <div class="parts">
+    <article class="part reveal"><header><svg aria-hidden="true"><use href="#i-kost"/></svg><h3>Nutrition</h3></header><ul>
+      <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Your week as day types</b> – e.g. weekday and weekend, with meals and times.</span></li>
+      <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Reminders on time</b> – check off or move 30 minutes right in the notification.</span></li>
+      <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Nutrition values from the Swedish Food Agency</b> – add ingredients in grams and kcal and macros are calculated.</span></li>
+      <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Outside the plan</b> – ate something else? Log it, so the day adds up.</span></li>
+      <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Calculate daily goals</b> – the calculator suggests kcal and macros and shows how.</span></li>
+    </ul></article>
+    <article class="part reveal"><header><svg aria-hidden="true"><use href="#i-tran"/></svg><h3>Training</h3></header><ul>
+      <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>182 exercises</b> with instructions – strength, calisthenics, mobility and prehab for shoulders and knees.</span></li>
+      <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Program templates</b> – Build strength, Build muscle, Bodyweight training, Calisthenics and Strong shoulders and knees.</span></li>
+      <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Set by set with a rest timer</b>, warm-up sets and supersets.</span></li>
+      <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>The next workout builds on the last</b> – the weights and reps you did.</span></li>
+      <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Weekly goal</b> for number of workouts.</span></li>
+    </ul></article>
+    <article class="part reveal"><header><svg aria-hidden="true"><use href="#i-kropp"/></svg><h3>Body</h3></header><ul>
+      <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Weight and measurements</b> in kg and cm, or lb and inches.</span></li>
+      <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Blood pressure and pulse</b>.</span></li>
+      <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Progress photos</b> – only in the app, optionally blurred in the gallery.</span></li>
+      <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Steps</b> from the phone's step counter or your watch via Health Connect.</span></li>
+      <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Water</b> with one tap and your own reminders.</span></li>
+    </ul></article>
+    <article class="part reveal"><header><svg aria-hidden="true"><use href="#i-stat"/></svg><h3>Statistics and progress</h3></header><ul>
+      <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Streaks</b> with the rule never miss twice in a row.</span></li>
+      <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Awards</b> for what you control – never for fast weight loss.</span></li>
+      <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Charts</b> for weight, measurements, steps, water, food and training – save your favourites.</span></li>
+      <li><svg aria-hidden="true"><use href="#tick"/></svg><span><b>Export to Excel</b> when you want a closer look.</span></li>
+    </ul></article>
+  </div>
+  <h3 class="reveal" style="margin-top:28px">Also</h3>
+  <ul class="extras reveal"><li>Home screen widgets</li><li>Twelve themes</li><li>Web mode – plan from your computer</li><li>Automatic backup</li><li>Setup guide and guided tour</li><li>Swedish and English</li><li>Large text and TalkBack</li></ul>
   <ul class="shots" style="margin-top:28px">
     <li><img src="bilder/home.jpg" width="432" height="960" loading="lazy" alt="Home: today's nutrition, water and next workout"></li>
     <li><img src="bilder/today.jpg" width="432" height="960" loading="lazy" alt="Today: the day's meals to check off"></li>
     <li><img src="bilder/progress.jpg" width="432" height="960" loading="lazy" alt="Progress: streaks and awards"></li>
     <li><img src="bilder/themes.jpg" width="432" height="960" loading="lazy" alt="Twelve themes to choose from"></li>
   </ul>
-  <div class="get">
+  <div class="get reveal">
     <div class="panel primary">
       <p style="margin:0 0 6px"><a class="button" href="https://github.com/kakelakel/bauta-app/releases/latest/download/bauta.apk"><svg aria-hidden="true"><use href="#down"/></svg>Download Bauta</a></p>
       <p class="meta" data-release="en">Version 1.0 (28) · for Android 8 and later · 5.3 MB.</p>
@@ -354,6 +465,17 @@
       }
     })
     .catch(function () {});
+})();
+</script>
+<script>
+/* Avsnitten glider in när de syns. Utan stöd för IntersectionObserver visas allt direkt. */
+(function () {
+  var els = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in'); }); return; }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+  }, { rootMargin: '0px 0px -8% 0px' });
+  els.forEach(function (e) { io.observe(e); });
 })();
 </script>
 </body>

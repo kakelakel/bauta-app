@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prova Bauta – interaktiv demo</title>
+<meta name="description" content="Prova Bauta direkt i webbläsaren: bocka av dagens måltider, fyll på vatten och kör ett pass med vilotimer. / Try Bauta in your browser.">
+<link rel="canonical" href="https://kakelakel.github.io/bauta-app/demo/">
+<link rel="icon" href="../bilder/ikon.png">
+<meta name="theme-color" content="#2E6B3E">
+<style>
+  /* Samma typsnitt och färger som startsidan. Inga kakor, ingen spårning och inga anrop utåt. */
+  @font-face { font-family:"Atkinson"; src:url("../fonts/atkinson-hyperlegible-latin-400-normal.woff2") format("woff2"); font-weight:400; font-display:swap; unicode-range:U+0000-002F, U+003A-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212; }
+  @font-face { font-family:"Atkinson"; src:url("../fonts/atkinson-hyperlegible-latin-700-normal.woff2") format("woff2"); font-weight:700; font-display:swap; unicode-range:U+0000-002F, U+003A-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212; }
+
+  :root {
+    --bg:#EEF3EC; --surface:#FFFFFF; --ink:#16231A; --muted:#506157;
+    --accent:#2E6B3E; --accent-ink:#FFFFFF; --ring:#CFE3D2; --line:#D6E0D4; --flame:#B5432A;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#0F1612; --surface:#17211B; --ink:#E3EBE4; --muted:#9BAAA0; --accent:#8FD19C; --accent-ink:#0F1612; --ring:#24402C; --line:#28372D; --flame:#F08A6C; }
+  }
+  * { box-sizing:border-box; }
+  [hidden] { display:none !important; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:18px/1.6 "Atkinson", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  a { color:var(--accent); text-underline-offset:3px; }
+  .wrap { max-width:1080px; margin:0 auto; padding:0 20px 64px; }
+  .top { display:flex; justify-content:space-between; align-items:center; padding:18px 0; gap:16px; flex-wrap:wrap; }
+  .brand { display:flex; align-items:center; gap:12px; font-weight:700; font-size:20px; color:var(--ink); text-decoration:none; }
+  .brand img { width:40px; height:40px; border-radius:11px; }
+  .lang { display:flex; gap:6px; }
+  .lang button { font:inherit; font-size:16px; font-weight:700; border:1px solid var(--line); background:var(--surface); color:var(--ink); border-radius:999px; padding:6px 16px; cursor:pointer; }
+  .lang button[aria-pressed="true"] { background:var(--accent); color:var(--accent-ink); border-color:var(--accent); }
+  h1 { font-size:clamp(34px,5vw,54px); line-height:1.08; letter-spacing:-.02em; margin:24px 0 16px; }
+  .muted { color:var(--muted); font-size:16px; }
+  .button { display:inline-flex; align-items:center; background:var(--accent); color:var(--accent-ink); text-decoration:none; font-weight:700; padding:13px 24px; border-radius:999px; }
+  .demo-text { max-width:52ch; }
+  /* Interaktiv demo (demo.js). Telefonen har appens egna ljusa färger, som en skärmbild. */
+  .demo-wrap { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:56px; align-items:start; }
+  .demo-text > p:first-child { margin-top:0; font-size:20px; }
+  .demo-text ol { padding-left:22px; margin:16px 0; }
+  .demo-text li { margin-bottom:10px; }
+  .demo { display:grid; justify-items:center; gap:10px; }
+  .d-phone { width:min(340px,86vw); padding:12px; border-radius:44px; background:var(--ink); box-shadow:0 30px 60px -30px rgba(22,35,26,.55); display:flex; flex-direction:column; }
+  .d-screen { height:600px; overflow-y:auto; background:#F1F5EF; color:#16231A; border-radius:32px 32px 0 0; padding:6px 14px 16px; font:15px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; scrollbar-width:thin; }
+  .d-appbar { font-weight:700; font-size:20px; padding:10px 4px 2px; }
+  .d-date { margin:8px 4px 10px; font-size:19px; font-weight:600; }
+  .d-card { background:#fff; border-radius:18px; padding:12px 14px; margin-bottom:10px; transition:background .3s; }
+  .d-small { font-size:13px; } .d-muted { color:#5E6E63; } .d-green { color:#2F6B3F; font-weight:600; }
+  .d-rings { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; margin:8px 0 10px; text-align:center; }
+  .d-ring { position:relative; }
+  .d-ring svg { width:78px; height:78px; display:block; margin:0 auto; }
+  .d-ring svg circle + circle { transition:stroke-dashoffset .6s cubic-bezier(.2,.8,.3,1); }
+  .d-ring-val { position:absolute; top:0; left:0; right:0; height:78px; display:grid; place-content:center; line-height:1.1; }
+  .d-ring-val b { font-size:15px; } .d-ring-val small { font-size:10px; color:#5E6E63; }
+  .d-ring-lbl { font-size:12px; margin-top:4px; }
+  .d-water { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:4px 12px; align-items:center; }
+  .d-water-txt { display:flex; justify-content:space-between; font-weight:600; }
+  .d-bar { grid-column:1; height:8px; border-radius:8px; background:#DCE7DA; overflow:hidden; }
+  .d-bar i { display:block; height:100%; background:#3E6577; border-radius:8px; transition:width .4s; }
+  .d-water .d-tonal { grid-column:2; grid-row:1 / span 2; }
+  .d-flame { color:#B5432A; font-weight:600; margin:10px 0 2px; font-size:14px; }
+  .d-meal-head { display:grid; grid-template-columns:52px minmax(0,1fr); gap:8px; }
+  .d-time { font-weight:700; color:#2F6B3F; font-size:17px; }
+  .d-meal.is-done { background:#F8FAF7; } .d-meal.is-done .d-time, .d-meal.is-done b { color:#5E6E63; }
+  .d-actions { display:flex; justify-content:flex-end; align-items:center; gap:8px; margin-top:8px; flex-wrap:wrap; }
+  .d-actions .d-green { margin-right:auto; font-size:14px; }
+  .d-screen button { font:inherit; font-weight:600; border:0; cursor:pointer; border-radius:999px; padding:8px 16px; }
+  .d-filled { background:#2F6B3F; color:#fff; } .d-filled:disabled { background:#C9D5C9; color:#5E6E63; cursor:default; }
+  .d-tonal { background:#D5EBD8; color:#16231A; }
+  .d-text { background:transparent; color:#2F6B3F; padding:8px 10px !important; }
+  .d-wide { width:100%; margin-top:4px; }
+  .d-screen button:focus-visible, .d-tabs button:focus-visible, .d-set input:focus-visible { outline:3px solid #2F6B3F; outline-offset:2px; }
+  .d-set { display:grid; grid-template-columns:28px 1fr auto; align-items:center; gap:8px; padding:8px 0; border-top:1px solid #E3EAE1; cursor:pointer; }
+  .d-set input { width:20px; height:20px; accent-color:#2F6B3F; }
+  .d-set.is-done span { color:#5E6E63; text-decoration:line-through; }
+  .d-rest { text-align:center; background:#D5EBD8; }
+  .d-big { font-size:40px; font-weight:700; font-variant-numeric:tabular-nums; }
+  .d-tabs { display:flex; background:#E6EDE4; border-radius:0 0 32px 32px; padding:8px 10px 12px; gap:8px; }
+  .d-tabs button { flex:1; font:600 15px system-ui, sans-serif; border:0; background:transparent; color:#16231A; padding:10px; border-radius:999px; cursor:pointer; }
+  .d-tabs button.on { background:#C8E2CC; }
+  .d-status { min-height:1.6em; margin:0; font-weight:700; color:var(--accent); text-align:center; max-width:340px; }
+  .d-reset { font:inherit; font-size:15px; background:none; border:1px solid var(--line); color:var(--ink); border-radius:999px; padding:6px 16px; cursor:pointer; }
+
+  @media (max-width:860px) {
+    .demo-wrap { grid-template-columns:minmax(0,1fr); gap:28px; }
+  }
+  /* Flikar: telefonen eller webbläget */
+  .intro p { max-width:60ch; margin:0 0 20px; }
+  .modes { display:inline-flex; gap:4px; padding:4px; border-radius:999px; background:var(--surface); border:1px solid var(--line); margin:0 0 32px; }
+  .modes button { font:inherit; font-size:17px; font-weight:700; border:0; background:transparent; color:var(--ink); border-radius:999px; padding:10px 22px; cursor:pointer; }
+  .modes button[aria-selected="true"] { background:var(--accent); color:var(--accent-ink); }
+  .modes button:focus-visible, .lang button:focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+  .browser { border:1px solid var(--line); border-radius:16px; overflow:hidden; background:var(--surface); box-shadow:0 30px 60px -34px rgba(22,35,26,.5); }
+  .browser-bar { display:flex; align-items:center; gap:8px; padding:10px 14px; border-bottom:1px solid var(--line); font-size:14px; color:var(--muted); }
+  .browser-bar i { width:11px; height:11px; border-radius:50%; background:var(--line); display:inline-block; }
+  .browser-bar span { margin-left:10px; background:var(--bg); border-radius:999px; padding:2px 14px; }
+  .browser iframe { display:block; width:100%; height:min(760px, 80vh); border:0; background:#fff; }
+  .web-text { max-width:70ch; margin-bottom:20px; }
+  .web-text ul { padding-left:22px; margin:10px 0; }
+  .cta-row { display:flex; flex-wrap:wrap; gap:14px 24px; align-items:center; margin-top:36px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <a class="brand" href="../"><img src="../bilder/ikon.png" alt="">Bauta</a>
+  <div class="lang" role="group" aria-label="Språk / Language">
+    <button type="button" data-lang="sv" aria-pressed="true">Svenska</button>
+    <button type="button" data-lang="en" aria-pressed="false">English</button>
+  </div>
+</header>
+<main>
+  <div class="intro">
+    <div data-text="sv"><h1>Prova Bauta</h1><p>Testa appen direkt i webbläsaren, med påhittad data. Inget sparas och inget skickas – allt sker hos dig.</p></div>
+    <div data-text="en" hidden><h1>Try Bauta</h1><p>Try the app right in your browser, with made-up data. Nothing is saved or sent – everything happens on your side.</p></div>
+  </div>
+  <div class="modes" role="tablist" aria-label="Demo">
+    <button type="button" role="tab" id="tab-phone" aria-controls="mode-phone" data-mode="phone" data-sv="Telefonen" data-en="The phone">Telefonen</button>
+    <button type="button" role="tab" id="tab-web" aria-controls="mode-web" data-mode="web" data-sv="Webbläget (dator)" data-en="Web mode (computer)">Webbläget (dator)</button>
+  </div>
+
+  <section id="mode-phone" role="tabpanel" aria-labelledby="tab-phone" class="demo-wrap">
+    <div class="demo-text">
+      <div data-text="sv">
+        <p>Så här känns en dag i appen. Det är en förenklad version – tryck runt:</p>
+        <ol>
+          <li>Tryck <strong>Gjort</strong> på lunchen och se ringarna fyllas.</li>
+          <li>Inte hungrig än? <strong>+30 min</strong> flyttar måltiden, som i notisen.</li>
+          <li>Fyll på <strong>vatten</strong> tills målet är nått.</li>
+          <li>Bocka av alla måltider – serien växer.</li>
+          <li>Byt till <strong>Pass</strong>, bocka av ett set och se vilotimern gå.</li>
+        </ol>
+      </div>
+      <div data-text="en" hidden>
+        <p>This is how a day in the app feels – a simplified version. Tap around:</p>
+        <ol>
+          <li>Tap <strong>Done</strong> on lunch and watch the rings fill.</li>
+          <li>Not hungry yet? <strong>+30 min</strong> moves the meal, just like in the notification.</li>
+          <li>Add <strong>water</strong> until the goal is reached.</li>
+          <li>Check off every meal – the streak grows.</li>
+          <li>Switch to <strong>Workout</strong>, check off a set and watch the rest timer.</li>
+        </ol>
+      </div>
+    </div>
+    <div class="demo" id="demo"></div>
+  </section>
+
+  <section id="mode-web" role="tabpanel" aria-labelledby="tab-web" hidden>
+    <div class="web-text">
+      <div data-text="sv">
+        <p>Med webbläget planerar du från datorn: telefonen blir en liten webbserver i ditt eget wifi, och du öppnar appen i datorns webbläsare. Här är det riktiga webbläget, med påhittad data i stället för din telefon:</p>
+        <ul>
+          <li><strong>Kost:</strong> dagtyper, måltider med tider, kcal och makron, och uppgifter. Prova att söka livsmedel i en måltid.</li>
+          <li><strong>Träning:</strong> bygg pass, lägg till övningar och set, koppla ihop superset och välj aktivt program.</li>
+        </ul>
+        <p class="muted">Livsmedlen i demon är några exempel med ungefärliga värden – i appen kommer de från Livsmedelsverket. Ladda om sidan så börjar demon om.</p>
+      </div>
+      <div data-text="en" hidden>
+        <p>With web mode you plan from your computer: the phone becomes a small web server on your own Wi-Fi, and you open the app in the computer's browser. This is the real web mode, with made-up data instead of your phone:</p>
+        <ul>
+          <li><strong>Nutrition:</strong> day types, meals with times, kcal and macros, and tasks. Try looking up a food in a meal.</li>
+          <li><strong>Training:</strong> build workouts, add exercises and sets, link supersets and choose the active program.</li>
+        </ul>
+        <p class="muted">The foods in the demo are a few examples with approximate values – in the app they come from the Swedish Food Agency. Reload the page to start over.</p>
+      </div>
+    </div>
+    <div class="browser">
+      <div class="browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>http://192.168.1.23:8080</span></div>
+      <iframe id="web" title="Bauta webbläge (demo)"></iframe>
+    </div>
+    <p class="muted"><a id="web-full" href="web/" target="_blank" rel="noopener"><span data-text="sv">Öppna webbläget i en egen flik</span><span data-text="en" hidden>Open web mode in its own tab</span></a></p>
+  </section>
+
+  <div class="cta-row">
+    <span data-text="sv"><a class="button" href="../#ladda-ner">Ladda ner Bauta</a></span>
+    <span data-text="en" hidden><a class="button" href="../#en">Download Bauta</a></span>
+    <span class="muted" data-text="sv"><a href="../">← Till startsidan</a></span>
+    <span class="muted" data-text="en" hidden><a href="../#en">← Back to the home page</a></span>
+  </div>
+</main>
+</div>
+<script src="../demo.js"></script>
+<script>
+/* Språk (?lang=en) och flik (?mode=web) står i adressen, så att man kan länka direkt. */
+(function () {
+  var host = document.getElementById('demo'), frame = document.getElementById('web');
+  var params = new URLSearchParams(location.search);
+  var state = { lang: params.get('lang') === 'en' ? 'en' : 'sv', mode: params.get('mode') === 'web' ? 'web' : 'phone' };
+  function url() {
+    var q = [];
+    if (state.lang === 'en') q.push('lang=en');
+    if (state.mode === 'web') q.push('mode=web');
+    history.replaceState(null, '', q.length ? '?' + q.join('&') : './');
+  }
+  function show(rebuild) {
+    var lang = state.lang;
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-text]').forEach(function (el) { el.hidden = el.getAttribute('data-text') !== lang; });
+    document.querySelectorAll('.lang button').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-lang') === lang ? 'true' : 'false'); });
+    document.querySelectorAll('.modes button').forEach(function (b) {
+      b.textContent = b.getAttribute('data-' + lang);
+      b.setAttribute('aria-selected', b.getAttribute('data-mode') === state.mode ? 'true' : 'false');
+    });
+    document.getElementById('mode-phone').hidden = state.mode !== 'phone';
+    document.getElementById('mode-web').hidden = state.mode !== 'web';
+    document.title = lang === 'en' ? 'Try Bauta – interactive demo' : 'Prova Bauta – interaktiv demo';
+    var src = 'web/' + (lang === 'en' ? '?lang=en' : '');
+    document.getElementById('web-full').setAttribute('href', src);
+    if (state.mode === 'web' && frame.getAttribute('src') !== src) frame.setAttribute('src', src);
+    if (rebuild) window.BautaDemo.mount(host, lang);
+  }
+  document.querySelectorAll('.lang button').forEach(function (b) {
+    b.addEventListener('click', function () { if (state.lang !== b.getAttribute('data-lang')) { state.lang = b.getAttribute('data-lang'); url(); show(true); } });
+  });
+  document.querySelectorAll('.modes button').forEach(function (b) {
+    b.addEventListener('click', function () { state.mode = b.getAttribute('data-mode'); url(); show(false); });
+  });
+  show(true);
+})();
+</script>
+</body>
+</html>

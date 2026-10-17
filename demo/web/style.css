@@ -1,0 +1,316 @@
+/* Bauta webbläge (WEB1). Samma designsystem som appen: Nunito, appens färger (ui/theme/Color.kt),
+   kort utan ramar, flikar med understrykning, tonade knappar. Ljust och mörkt efter datorns inställning. */
+@font-face {
+  font-family: "Nunito";
+  src: url("nunito.ttf") format("truetype");
+  font-weight: 200 1000;
+  font-display: swap;
+}
+
+:root {
+  --primary: #2F6B3F;
+  --on-primary: #FFFFFF;
+  --primary-container: #B7F0BF;
+  --on-primary-container: #00210B;
+  --secondary-container: #D2E8D4;
+  --on-secondary-container: #0D1F12;
+  --tertiary-container: #BFE9F7;
+  --on-tertiary-container: #001F27;
+  --surface: #F1F3ED;
+  --container: #E9ECE4;
+  --card: #FFFFFF;
+  --on-surface: #191D17;
+  --on-variant: #4E5649;
+  --outline: #7A8374;
+  --outline-variant: #C2C9BD;
+  --error: #BA1A1A;
+  --inverse: #2E322B;
+  --inverse-on: #EFF2E9;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .08), 0 2px 8px rgba(0, 0, 0, .05);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary: #9CD5A4;
+    --on-primary: #00391A;
+    --primary-container: #155129;
+    --on-primary-container: #B7F0BF;
+    --secondary-container: #384B3C;
+    --on-secondary-container: #D2E8D4;
+    --tertiary-container: #214C58;
+    --on-tertiary-container: #BFE9F7;
+    --surface: #11150F;
+    --container: #1B2019;
+    --card: #21261F;
+    --on-surface: #E0E4DA;
+    --on-variant: #B0B8AA;
+    --outline: #8C9586;
+    --outline-variant: #424940;
+    --error: #FFB4AB;
+    --inverse: #E0E4DA;
+    --inverse-on: #2E322B;
+    --shadow: none;
+    color-scheme: dark;
+  }
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--surface);
+  color: var(--on-surface);
+  font: 16px/1.5 "Nunito", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  accent-color: var(--primary);
+}
+svg.icon { width: 24px; height: 24px; fill: currentColor; flex: none; display: block; }
+.hidden { display: none !important; }
+.grow { flex: 1; min-width: 0; }
+button:focus-visible, a:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+
+/* ---------- Sidhuvud och navigering ---------- */
+header {
+  position: sticky; top: 0; z-index: 10;
+  background: var(--surface);
+  border-bottom: 1px solid var(--outline-variant);
+}
+.bar {
+  max-width: 1040px; margin: 0 auto; padding: 12px 24px 0;
+  display: flex; align-items: center; gap: 24px;
+}
+.brand { display: flex; align-items: center; gap: 10px; font-size: 22px; font-weight: 800; letter-spacing: -.2px; }
+.brand img { width: 32px; height: 32px; border-radius: 9px; }
+.groups { display: flex; gap: 8px; flex: 1; }
+.group {
+  display: flex; align-items: center; gap: 8px;
+  height: 40px; padding: 0 18px 0 14px; border-radius: 20px; border: 0;
+  background: transparent; color: var(--on-variant);
+  font: inherit; font-weight: 700; font-size: 15px; cursor: pointer;
+}
+.group:hover { background: var(--container); }
+.group.on { background: var(--secondary-container); color: var(--on-secondary-container); }
+.tabs { max-width: 1040px; margin: 0 auto; padding: 0 24px; display: flex; gap: 8px; margin-top: 8px; }
+.tab {
+  position: relative; border: 0; background: transparent; cursor: pointer;
+  font: inherit; font-weight: 700; font-size: 15px; color: var(--on-variant);
+  padding: 12px 16px 14px;
+}
+.tab:hover { color: var(--primary); }
+.tab.on { color: var(--primary); }
+.tab.on::after {
+  content: ""; position: absolute; left: 16px; right: 16px; bottom: 0;
+  height: 3px; border-radius: 3px 3px 0 0; background: var(--primary);
+}
+
+/* ---------- Sidan ---------- */
+main { max-width: 1040px; margin: 0 auto; padding: 28px 24px 48px; }
+.page-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; margin-bottom: 24px; }
+.page-head .titles { min-width: 0; }
+.page-head.editor { align-items: center; justify-content: flex-start; gap: 8px; }
+h1 { font-size: 28px; line-height: 36px; font-weight: 800; margin: 0; }
+h2 { font-size: 20px; line-height: 28px; font-weight: 800; margin: 0; }
+h3 { font-size: 13px; line-height: 20px; font-weight: 800; margin: 0 0 8px; text-transform: uppercase; letter-spacing: .6px; color: var(--primary); }
+.help { color: var(--on-variant); margin: 6px 0 0; max-width: 640px; }
+.muted { color: var(--on-variant); }
+.small { font-size: 14px; line-height: 20px; }
+.sub { color: var(--primary); font-weight: 600; }
+.strong { font-weight: 800; }
+.error-text { color: var(--error); }
+.footnote { text-align: center; color: var(--on-variant); font-size: 13px; margin-top: 32px; }
+
+/* ---------- Kort och listor ---------- */
+.card {
+  background: var(--card); border-radius: 16px; padding: 20px 24px;
+  box-shadow: var(--shadow); margin-bottom: 16px;
+}
+.card.active { background: var(--primary-container); color: var(--on-primary-container); }
+.card.active .sub, .card.active h3 { color: var(--on-primary-container); }
+.card-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.card-head .titles { min-width: 0; }
+.card-head .actions { display: flex; align-items: center; gap: 4px; flex: none; }
+.label-active { font-size: 13px; font-weight: 800; letter-spacing: .8px; text-transform: uppercase; color: var(--primary); }
+.card.active .label-active { color: var(--on-primary-container); }
+.section { margin-top: 20px; }
+.section:first-child { margin-top: 0; }
+.stack > * + * { margin-top: 16px; }
+
+.rows { list-style: none; margin: 12px 0 0; padding: 0; }
+.rows > li {
+  display: flex; align-items: center; gap: 12px; min-height: 52px; padding: 6px 0;
+  border-top: 1px solid var(--outline-variant);
+}
+.rows > li:first-child { border-top: 0; }
+.rows .grow { flex: 1; min-width: 0; }
+.rows .meta { color: var(--on-variant); font-size: 14px; white-space: nowrap; min-width: 76px; text-align: right; }
+.total { margin: 12px 0 0; font-weight: 800; }
+
+/* Klickbara rader (måltider, uppgifter, pass) */
+.list { background: var(--card); border-radius: 16px; box-shadow: var(--shadow); overflow: hidden; }
+.item {
+  display: flex; align-items: center; gap: 16px; padding: 14px 16px 14px 24px; cursor: pointer;
+  border-top: 1px solid var(--outline-variant);
+}
+.item:first-child { border-top: 0; }
+.item:hover { background: var(--container); }
+.item:focus-visible { outline: 2px solid var(--primary); outline-offset: -2px; }
+.item .grow { flex: 1; min-width: 0; }
+.item .name { font-weight: 800; font-size: 17px; }
+.item .line { color: var(--on-variant); font-size: 14px; line-height: 20px; }
+.item .chev { color: var(--on-variant); }
+.empty { color: var(--on-variant); padding: 8px 0; }
+.list .empty { padding: 20px 24px; }
+
+/* ---------- Knappar ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  height: 40px; padding: 0 24px; border-radius: 20px; border: 0; cursor: pointer;
+  font: inherit; font-size: 14px; font-weight: 800; letter-spacing: .1px; white-space: nowrap;
+  background: transparent; color: var(--primary);
+}
+.btn svg.icon { width: 18px; height: 18px; margin-left: -6px; }
+.btn.filled { background: var(--primary); color: var(--on-primary); }
+.btn.filled:hover { box-shadow: 0 1px 3px rgba(0, 0, 0, .25); }
+.btn.tonal { background: var(--secondary-container); color: var(--on-secondary-container); }
+.btn.outlined { border: 1px solid var(--outline); }
+.btn.text { padding: 0 12px; }
+.btn.text:hover, .btn.outlined:hover { background: var(--container); }
+.btn.danger { color: var(--error); }
+.btn:disabled { opacity: .38; cursor: default; box-shadow: none; }
+.fab {
+  display: inline-flex; align-items: center; gap: 12px; flex: none;
+  height: 56px; padding: 0 20px 0 16px; border-radius: 16px; border: 0; cursor: pointer;
+  background: var(--primary-container); color: var(--on-primary-container);
+  font: inherit; font-size: 15px; font-weight: 800; box-shadow: var(--shadow);
+}
+.fab:hover { filter: brightness(.97); }
+.icon-btn {
+  width: 40px; height: 40px; border-radius: 20px; border: 0; padding: 8px; cursor: pointer;
+  background: transparent; color: var(--on-variant); flex: none;
+}
+.icon-btn:hover { background: var(--container); color: var(--on-surface); }
+.icon-btn.danger:hover { color: var(--error); }
+.icon-btn:disabled { opacity: .3; cursor: default; background: transparent; }
+.card.active .icon-btn { color: var(--on-primary-container); }
+.btn-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.btn-row .spacer { flex: 1; }
+.actions-bar { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+.actions-bar .spacer { flex: 1; }
+
+/* ---------- Fält ---------- */
+.field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.field > span { font-size: 13px; font-weight: 800; color: var(--on-variant); }
+input, select, textarea {
+  font: inherit; color: var(--on-surface); background: transparent;
+  border: 1px solid var(--outline); border-radius: 8px;
+  height: 44px; padding: 0 12px; min-width: 0;
+}
+select { padding-right: 8px; background: var(--card); }
+textarea { height: auto; min-height: 88px; padding: 10px 12px; resize: vertical; width: 100%; }
+input:hover, select:hover, textarea:hover { border-color: var(--on-surface); }
+input:focus, select:focus, textarea:focus { outline: 0; border-color: var(--primary); box-shadow: inset 0 0 0 1px var(--primary); }
+input.num { width: 96px; text-align: right; }
+input.time { width: 124px; }
+.form-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; }
+.form-grid .wide { grid-column: 1 / -1; }
+.inline { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.add-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--outline-variant); }
+.add-row select { flex: 1; min-width: 180px; max-width: 360px; }
+
+.search { position: relative; display: flex; align-items: center; }
+.search svg.icon { position: absolute; left: 12px; color: var(--on-variant); pointer-events: none; }
+.search input { width: 100%; padding-left: 44px; }
+.results { margin-top: 8px; border-radius: 12px; background: var(--container); max-height: 320px; overflow: auto; }
+.results button {
+  display: flex; justify-content: space-between; gap: 12px; width: 100%; text-align: left;
+  border: 0; background: transparent; color: var(--on-surface); font: inherit; padding: 10px 16px; cursor: pointer;
+}
+.results button:hover, .results button:focus-visible { background: var(--secondary-container); outline: 0; }
+.results .hint { padding: 12px 16px; color: var(--on-variant); }
+
+.options { display: flex; flex-direction: column; gap: 4px; }
+.option { display: flex; align-items: center; gap: 12px; min-height: 40px; cursor: pointer; }
+.option input { width: 20px; height: 20px; margin: 0; }
+
+/* Övningar: sök och filter, egen-märkning, instruktionssteg */
+.filters { display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }
+.badge {
+  display: inline-block; margin-left: 8px; vertical-align: 2px;
+  font-size: 12px; font-weight: 800; letter-spacing: .4px; padding: 1px 8px; border-radius: 6px;
+  background: var(--tertiary-container); color: var(--on-tertiary-container);
+}
+.steps { margin: 0; padding-left: 22px; }
+.steps li { margin: 6px 0; }
+.results button.create { color: var(--primary); font-weight: 800; border-top: 1px solid var(--outline-variant); }
+
+/* ---------- Chips ---------- */
+.chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 32px; padding: 0 14px; border-radius: 8px; cursor: pointer;
+  border: 1px solid var(--outline); background: transparent; color: var(--on-variant);
+  font: inherit; font-size: 14px; font-weight: 700;
+}
+.chip:hover { background: var(--container); }
+.chip svg.icon { width: 18px; height: 18px; margin-left: -4px; }
+.chip.on { background: var(--secondary-container); color: var(--on-secondary-container); border-color: transparent; }
+.card.active .chip { border-color: var(--on-primary-container); color: var(--on-primary-container); }
+.card.active .chip.on { background: var(--on-primary-container); color: var(--primary-container); }
+
+/* ---------- Set ---------- */
+.sets { display: grid; gap: 8px 12px; align-items: center; margin-top: 12px; }
+.sets .head { font-size: 13px; font-weight: 800; color: var(--on-variant); }
+.sets .kind { font-size: 14px; color: var(--on-variant); }
+.sets .kind.warm { color: var(--primary); font-weight: 700; }
+.sets input { width: 100%; text-align: right; height: 40px; }
+
+/* ---------- Meddelanden ---------- */
+.banner {
+  display: flex; align-items: center; gap: 16px; justify-content: space-between; flex-wrap: wrap;
+  background: var(--tertiary-container); color: var(--on-tertiary-container);
+  border-radius: 12px; padding: 12px 12px 12px 20px; margin-bottom: 16px;
+}
+.banner .btn { color: var(--on-tertiary-container); }
+.banner.offline { background: var(--inverse); color: var(--inverse-on); }
+.snackbar {
+  position: fixed; left: 24px; bottom: 24px; z-index: 30; max-width: min(560px, calc(100vw - 48px));
+  background: var(--inverse); color: var(--inverse-on); border-radius: 8px; padding: 14px 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .25); font-size: 15px;
+}
+
+/* ---------- Dialog ---------- */
+dialog.dlg {
+  border: 0; border-radius: 28px; padding: 24px; width: min(420px, calc(100vw - 32px));
+  background: var(--card); color: var(--on-surface); box-shadow: 0 8px 32px rgba(0, 0, 0, .3);
+}
+dialog.dlg::backdrop { background: rgba(0, 0, 0, .4); }
+dialog.dlg h2 { font-size: 22px; line-height: 30px; margin-bottom: 16px; }
+dialog.dlg p { margin: 0 0 8px; color: var(--on-variant); }
+dialog.dlg input { width: 100%; }
+dialog.dlg .actions-bar { justify-content: flex-end; margin-top: 24px; }
+
+/* ---------- Inloggning ---------- */
+.login-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
+.login { width: min(420px, 100%); background: var(--card); border-radius: 28px; padding: 36px 32px; box-shadow: var(--shadow); text-align: center; }
+.login .brand { justify-content: center; margin-bottom: 24px; }
+.login h1 { margin-bottom: 8px; }
+.login .help { margin: 0 auto 24px; }
+.login input { width: 100%; height: 64px; font-size: 32px; font-weight: 800; letter-spacing: 10px; text-align: center; border-radius: 12px; }
+.login .btn { width: 100%; height: 48px; border-radius: 24px; margin-top: 20px; font-size: 15px; }
+.login .error-text { margin: 12px 0 0; }
+
+/* ---------- Smala fönster ---------- */
+@media (max-width: 720px) {
+  header { position: static; }
+  .bar { padding: 12px 16px 0; gap: 12px; flex-wrap: wrap; }
+  .brand span { display: none; }
+  .tabs { padding: 0 8px; overflow-x: auto; }
+  main { padding: 20px 16px 40px; }
+  .page-head { flex-direction: column; gap: 16px; }
+  .card { padding: 16px; }
+  .item { padding-left: 16px; }
+}
+@media (max-height: 500px) { header { position: static; } }
+
+/* Superset (SS1): en ram runt övningarna som görs växelvis. */
+.superset { border: 2px solid var(--primary); border-radius: 20px; padding: 10px; display: flex; flex-direction: column; gap: 12px; }
+.superset-label { color: var(--primary); font-weight: 700; letter-spacing: .08em; font-size: 13px; padding: 2px 6px 0; }
